@@ -1,0 +1,57 @@
+{# 
+  Article Header Macro
+  Usage:
+  {% from "macros/article-head.njk" import articleHead %}
+  {{ articleHead(
+    title = title,
+    date = date,
+    category = category,
+    description = description,
+    tags = tags,
+    image = image,
+    imageAlt = imageAlt
+  ) }}
+#}
+
+{% macro articleHead(title, date, category, description, tags, image, imageAlt) %}
+  <header class="article-header">
+    {% if image %}
+      <div class="article-cover-image">
+        <img src="{{ image }}" alt="{{ imageAlt or title }}" class="img-fluid rounded">
+      </div>
+    {% endif %}
+
+    <h1 class="article-title">{{ title }}</h1>
+
+    <div class="article-meta">
+      {% if date %}
+        <div class="article-date">
+          <i class="bi bi-calendar"></i>
+          <time datetime="{{ date | dateISO }}">{{ date | dateFilter }}</time>
+        </div>
+      {% endif %}
+
+      {% if category %}
+        <div class="article-category">
+          <i class="bi bi-folder"></i>
+          <a href="/blog/{{ category | slug }}/">{{ category }}</a>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if description %}
+      <div class="article-description">
+        <p>{{ description }}</p>
+      </div>
+    {% endif %}
+
+    {% if tags and tags.length > 0 %}
+      <div class="article-tags">
+        <i class="bi bi-tags"></i>
+        {% for tag in tags %}
+          <a href="/blog/tags/{{ tag | slug }}/" class="article-tag">{{ tag }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </header>
+{% endmacro %}

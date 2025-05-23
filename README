@@ -1,0 +1,5 @@
+Readme - documentation for the website
+
+1. Resume: to edit the data in the resume edit the datafile json in `src/_data/resume.json`.
+2. Blog: to make new posts add them to `blog/posts/` as a md file. Refer to `blog/README` for more specific documentation: (incl, how to opt out of image carousel, front matter schema)
+3. 

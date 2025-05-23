@@ -1,0 +1,32 @@
+---
+pagination:
+  data: collections.categories
+  size: 1
+  alias: category
+permalink: /blog/{{ category.slug }}/
+title: "{{ category.name }} - Blog"
+layout: layouts/base.njk
+---
+
+{% block head_styles %}
+  <link rel="stylesheet" href="/assets/css/blog/index.css">
+{% endblock %}
+
+{% block content %}
+  <div class="blog-article-content">
+    <h1>{{ category.name }}</h1>
+
+    <p>
+      <a href="/blog/">&larr; Back to all categories</a>
+    </p>
+
+    <ul class="posts-list">
+      {%- for post in category.posts -%}
+        <li>
+          <a href="{{ post.url }}">{{ post.data.title }}</a>
+          <span class="post-date">{{ post.date | dateFilter }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{% endblock %}

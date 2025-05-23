@@ -1,0 +1,45 @@
+// assets/scss/components/_header.scss
+@use "../variables" as vars;
+@use "../mixins" as mix;
+
+.header {
+  background-color: var(--bs-header-bg);
+  border-bottom: vars.$border-width solid var(--bs-border-color);
+  padding: vars.$spacer 0;
+  margin-bottom: 0;
+
+  .navbar {
+    padding: 0;
+  }
+
+  .site-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--bs-body-color);
+    text-decoration: none;
+    @include mix.transition(color);
+
+    &:hover {
+      color: var(--bs-primary);
+      text-decoration: none;
+    }
+  }
+}
+
+.theme-toggle {
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--bs-body-color);
+  cursor: pointer;
+  @include mix.transition(color);
+
+  &:hover {
+    color: var(--bs-primary);
+  }
+}

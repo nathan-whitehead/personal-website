@@ -1,0 +1,178 @@
+---
+layout: layouts/base.njk
+---
+
+{% from "macros/article-head.njk" import articleHead %}
+
+{% block head_styles %}
+  <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div class="blog-article-content">
+    {{ articleHead(
+    title = title,
+    date = date,
+    category = category,
+    description = description,
+    tags = tags,
+    image = image,
+    imageAlt = imageAlt
+  ) }}
+
+    <div class="article-content">
+      {{ content | safe }}
+    </div>
+
+    <div class="article-navigation">
+      <div class="row">
+        {% if collections.blogPosts %}
+          {% set previousPost = collections.blogPosts | getPreviousCollectionItem %}
+          {% set nextPost = collections.blogPosts | getNextCollectionItem %}
+
+          {% if previousPost %}
+            <div class="col-6">
+              <div class="prev-post">
+                <span class="nav-label">Previous</span>
+                <a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if nextPost %}
+            <div class="col-6 text-end">
+              <div class="next-post">
+                <span class="nav-label">Next</span>
+                <a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body_scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize all carousels on the page
+      const carousels = document.querySelectorAll('.image-carousel .splide');
+      if (carousels.length) {
+
+        carousels.forEach(carousel => {
+          const splide = new Splide(carousel, {
+            perPage: 1,
+            gap: '1rem',
+            arrows: true,
+            pagination: true,
+            type: 'loop',
+            autoWidth: true,
+            focus: 'center',
+            trimSpace: false,
+            fixedWidth: false,
+            fixedHeight: false,
+            heightRatio: 0,
+            waytForTransition: true,
+            resetProgress: true,
+
+            breakpoints: {
+              768: {
+                arrows: false
+              }
+            }
+          });
+
+          /* carousel
+            .querySelectorAll('img')
+            .forEach(img => {
+              if (!img.complete) {
+                img.onload = function () {
+                  splide.refresh();
+                };
+              }
+            }); */
+          // Handle image loading
+          carousel
+            .querySelectorAll('img')
+            .forEach(img => {
+              if (!img.complete) {
+                img.onload = function () {
+                  splide.refresh();
+
+                  // Adjust caption width after image loads
+                  const figure = img.closest('figure');
+                  const caption = figure
+                    ?.querySelector('figcaption');
+                  if (caption) {
+                    caption.style.width = `${img.offsetWidth}px`;
+                  }
+                };
+              } else {
+                // For already loaded images
+                const figure = img.closest('figure');
+                const caption = figure
+                  ?.querySelector('figcaption');
+                if (caption) {
+                  caption.style.width = `${img.offsetWidth}px`;
+                }
+              }
+            });
+          splide.mount();
+
+          splide.on('moved', function () {
+            carousel
+              .querySelectorAll('figure')
+              .forEach(figure => {
+                const img = figure.querySelector('img');
+                const caption = figure.querySelector('figcaption');
+                if (img && caption) {
+                  caption.style.width = `${img.offsetWidth}px`;
+                }
+              });
+          });
+        });
+      }
+
+      // Also listen for window resize to readjust caption widths
+      window.addEventListener('resize', function () {
+        document
+          .querySelectorAll('.image-carousel figure')
+          .forEach(figure => {
+            const img = figure.querySelector('img');
+            const caption = figure.querySelector('figcaption');
+            if (img && caption) {
+              caption.style.width = `${img.offsetWidth}px`;
+            }
+          });
+      });
+
+      // Initialize spoiler functionality
+      const spoilers = document.querySelectorAll('span.spoiler');
+      spoilers.forEach(spoiler => {
+        spoiler.addEventListener('click', function () {
+          this
+            .classList
+            .add('revealed');
+        });
+
+        // Optional: Allow keyboard navigation
+        spoiler.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            this
+              .classList
+              .add('revealed');
+            e.preventDefault();
+          }
+        });
+
+        // Make spoilers focusable for accessibility
+        if (!spoiler.hasAttribute('tabindex')) {
+          spoiler.setAttribute('tabindex', '0');
+        }
+      });
+    });
+  </script>
+{% endblock %}

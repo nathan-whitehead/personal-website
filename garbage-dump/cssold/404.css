@@ -1,0 +1,23 @@
+/* 404 Error Page */
+.error-page {
+  text-align: center;
+  padding: 3rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.error-image {
+  margin: 2rem 0;
+}
+
+.error-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+}
+.error-image img {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  border-radius: 10px;
+}

@@ -1,0 +1,94 @@
+---
+title: Contact
+layout: layouts/base.njk
+---
+{% from "macros/social-links.njk" import socialLinks %}
+
+{# {% block head_styles %}
+  <link rel="stylesheet" href="/assets/css/about/index.css">
+  <link rel="stylesheet" href="/assets/css/about/contact.css">
+{% endblock %} #}
+
+{% block content %}
+  <div class="about-container">
+    <div class="about-header mb-4 p-4 text-center">
+      <h1 class="display-4 mb-3">Contact Me</h1>
+      <p class="lead mb-4">If you have any questions or would like to get in touch, feel free to reach out!</p>
+      {{ socialLinks(resume, "mb-2") }}
+    </div>
+
+    <div class="contact-container p-4 bg-body-tertiary rounded shadow-sm mb-5">
+      <div class="contact-form container font-sans-serif">
+        <h2 class="mb-4 text-center">Get in Touch</h2>
+        <form action="https://hedgehog-njw.org/api/contact" method="POST" class="needs-validation" novalidate>
+          <div class="row mb-3">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <label for="name" class="form-label">Name:</label>
+              <input type="text" class="form-control" id="name" name="name" required>
+              <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+              <div class="invalid-feedback">
+                Please provide a valid email address.
+              </div>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label for="message" class="form-label">Message:</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+            <div class="invalid-feedback">
+              Please enter your message.
+            </div>
+          </div>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-primary px-4">Send Message</button>
+          </div>
+        </form>
+        {# <p class="contact-note mt-4 text-center fst-italic text-secondary">I will get back to you as soon as possible!</p> #}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block body_scripts %}
+  <script>
+    // Form validation script
+    (function () {
+      'use strict';
+
+      // Fetch all forms we want to apply validation to
+      const forms = document.querySelectorAll('.needs-validation');
+
+      // Loop over them and prevent submission
+      Array
+        .prototype
+        .slice
+        .call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            form
+              .classList
+              .add('was-validated');
+          }, false);
+        });
+    })();
+
+    (function () {
+      // Add asterisks to required fields
+      const requiredInputs = document.querySelectorAll('input[required], textarea[required]');
+      requiredInputs.forEach(input => {
+        const label = document.querySelector(`label[for="${input.id}"]`);
+        if (label) {
+          label.innerHTML += ' <span class="text-danger">*</span>';
+        }
+      });
+    })();
+  </script>
+{% endblock %}

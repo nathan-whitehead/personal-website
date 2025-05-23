@@ -1,0 +1,55 @@
+@use "variables" as vars;
+
+/* Custom Rainbow Braces Colors */
+.token.punctuation.brace-level-1,
+.token.punctuation.brace-level-5,
+.token.punctuation.brace-level-9 {
+  color: rgb(247, 212, 60) !important; // Light blue
+}
+
+.token.punctuation.brace-level-2,
+.token.punctuation.brace-level-6,
+.token.punctuation.brace-level-10 {
+  color: rgb(194, 108, 201) !important; // Light pink
+}
+
+.token.punctuation.brace-level-3,
+.token.punctuation.brace-level-7,
+.token.punctuation.brace-level-11 {
+  color: rgb(65, 141, 239) !important; // Light green
+}
+
+.token.punctuation.brace-level-4,
+.token.punctuation.brace-level-8,
+.token.punctuation.brace-level-12 {
+  color: #ffd166 !important; // Light yellow/gold
+}
+
+/* Matched brace highlighting */
+.rainbow-braces .token.punctuation.brace-level-1.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-5.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-9.brace-hover {
+  background-color: rgba(91, 206, 250, 0.3);
+  color: white !important;
+}
+
+.rainbow-braces .token.punctuation.brace-level-2.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-6.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-10.brace-hover {
+  background-color: rgba(245, 169, 184, 0.3) !important;
+  color: white !important;
+}
+
+.rainbow-braces .token.punctuation.brace-level-3.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-7.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-11.brace-hover {
+  background-color: rgba(161, 239, 139, 0.3) !important;
+  color: white !important;
+}
+
+.rainbow-braces .token.punctuation.brace-level-4.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-8.brace-hover,
+.rainbow-braces .token.punctuation.brace-level-12.brace-hover {
+  background-color: rgba(255, 209, 102, 0.3) !important;
+  color: white !important;
+}

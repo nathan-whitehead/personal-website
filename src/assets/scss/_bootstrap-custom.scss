@@ -1,0 +1,41 @@
+@use "variables" as *;
+
+$color-contrast-dark: $light-text;
+$color-contrast-light: $dark-text;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success-color,
+  "info": $info-color,
+  "warning": $warning-color,
+  "danger": $danger-color,
+  "light": $light,
+  "dark": $dark,
+  "accent": $light-accent,
+);
+
+$font-family-base: $font-family-serif;
+$font-family-sans-serif: $font-family-sans-serif;
+$font-family-monospace: $font-family-monospace;
+$headings-font-family: $headings-font-family;
+
+$enable-responsive-font-sizes: true;
+
+$body-bg: $light-bg;
+$body-color: $light-text;
+
+$link-color: $light-text;
+$link-hover-color: $light-primary;
+$link-hover-decoration: underline;
+
+// Navbar
+$navbar-padding-y: 1rem;
+$navbar-light-color: $light-text;
+$navbar-light-hover-color: $light-primary;
+$navbar-light-active-color: $light-primary;
+$navbar-dark-color: $dark-text;
+$navbar-dark-hover-color: $dark-primary;
+$navbar-dark-active-color: $dark-primary;
+
+$min-contrast-ratio: 4.5;

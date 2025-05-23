@@ -1,0 +1,98 @@
+{# src/_includes/base.njk #}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title | default("Nathan's Website") }}</title>
+    <meta name="description" content="{{ description | default('Nathan&#39;s personal website') }}">
+    <link rel="icon" href="/assets/favicon.ico"/>
+
+    {# icon libraries, Material Symbols, FontAwesome, Bootstrap icons #}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <link href="/assets/libraries/fontawesome-free-6.7.2-web/css/fontawesome.css" rel="stylesheet"/>
+    <link href="/assets/libraries/fontawesome-free-6.7.2-web/css/brands.css" rel="stylesheet"/>
+    <link href="/assets/libraries/fontawesome-free-6.7.2-web/css/solid.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/assets/libraries/bootstrap-icons/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="/assets/libraries/splide/dist/css/splide.min.css">
+
+    {# Compiled Main Stylesheet #}
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    {# page-specific stylesheets (maybe unneccessary later?) #}
+    {% block head_styles %}
+      {% if css %}
+        <link rel="stylesheet" href="{{ css }}">
+      {% endif %}
+    {% endblock %}
+
+    {# custom js #}
+    <script src="/assets/js/script.js" defer></script>
+    {# bootstrap library js #}
+    <script src="/assets/libraries/bootstrap/js/bootstrap.bundle.min.js" defer></script>
+
+    {# any additional page-specific head content #}
+    {% block head_extra %}{% endblock %}
+
+    {{ page | eleventyRedirect | safe }}
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="navbar navbar-expand-md">
+          <a href="/" class="site-title">Nathan's Site</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto site-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="/">HOME</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/blog/">BLOG</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/about/">ABOUT</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/projects/">PROJECTS</a>
+              </li>
+            </ul>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+              <span id="theme-toggle-icon" class="material-symbols-outlined">
+                light_mode
+              </span>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="py-4">
+      <div class="container">
+        {% block content %}
+          {{ content | safe }}
+        {% endblock %}
+      </div>
+    </main>
+
+    <footer class="footer">
+      {% block footer %}
+        <div class="container">
+          <p>&copy; {% year %} - Nathan</p>
+          <p class="footer-made-with">Built with love in the United States <img src="/assets/img/icons/flags/Flag_of_the_United_States.svg" alt="US Flag" class="flag-icon"></p>
+          <div class="footer-links">
+            <a href="https://github.com/nathan-whitehead">GitHub</a> |
+          <a href="https://linkedin.com/in/nathan-whitehead0">LinkedIn</a> |
+          <a href="/contact/">Contact</a>
+          </div>
+        </div>
+      {% endblock %}
+    </footer>
+
+    {% block body_scripts %}{% endblock %}
+  </body>
+</html>
