@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@layouts/base.astro";
+import { getCollection } from "astro:content";
+import { Image, getImage } from "astro:assets";
+import { getLink } from "@utils/links.js";
+import BlogHeader from "@components/blog/BlogHeader.astro";
+import BlogPost from "@layouts/BlogPost.astro";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog", ({ data }) => {
+    // Filter out draft posts in production
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Format date
+const formattedDate = new Date(entry.data.date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Blog`}
+  description={entry.data.description}
+>
+  <div class="container max-w-4xl mx-auto px-4 py-8">
+    <article class="blog-post">
+      <BlogHeader
+        title={entry.data.title}
+        formattedDate={formattedDate}
+        category={entry.data.category}
+        cover={entry.data.cover}
+      />
+
+      <BlogPost Content={Content} frontmatter={entry.data} />
+
+      {
+        entry.data.tags && entry.data.tags.length > 0 && (
+          <div class="post-tags mt-8 pt-4 border-t border-paper-300 dark:border-zinc-700">
+            <span class="font-sans font-medium">Tags:</span>
+            <div class="flex flex-wrap gap-2 mt-2">
+              {entry.data.tags.map((tag: string) => (
+                <a
+                  href={`/blog/tag/${tag.toLowerCase().replace(/\s+/g, "-")}/`}
+                  class="px-3 py-1 rounded-full bg-paper-200 dark:bg-zinc-800 hover:bg-paper-300 dark:hover:bg-zinc-700 transition-colors text-sm"
+                >
+                  {tag}
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </article>
+  </div>
+</BaseLayout>

@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "custom-icons";
+  src: url("/fonts/custom-icons/custom-icons.eot?wq5bf4");
+  src: url("/fonts/custom-icons/custom-icons.eot?wq5bf4#iefix")
+      format("embedded-opentype"),
+    url("/fonts/custom-icons/custom-icons.ttf?wq5bf4") format("truetype"),
+    url("/fonts/custom-icons/custom-icons.woff?wq5bf4") format("woff"),
+    url("/fonts/custom-icons/custom-icons.svg?wq5bf4#custom-icons")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.ci::before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "custom-icons" !important;
+  font-style: normal;
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom icon definitions */
+.ci-letterboxd:before {
+  content: "\e900";
+}
+.ci-hedgehog:before {
+  content: "\e901";
+}

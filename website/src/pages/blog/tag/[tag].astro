@@ -1,0 +1,56 @@
+---
+import BaseLayout from "@layouts/base.astro";
+import { getCollection } from "astro:content";
+import BackArrow from "@components/common/BackArrow.astro";
+import BlogList from "@components/blog/BlogList.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog");
+
+  // Get all tags
+  const allTags = allPosts
+    .flatMap((post) => post.data.tags || [])
+    .filter((tag, index, self) => self.indexOf(tag) === index);
+
+  return allTags.map((tag) => {
+    const filteredPosts = allPosts.filter(
+      (post) => post.data.tags && post.data.tags.includes(tag)
+    );
+    const slug = tag.toLowerCase().replace(/\s+/g, "-");
+
+    return {
+      params: { tag: slug },
+      props: { tag, posts: filteredPosts },
+    };
+  });
+}
+
+const { tag, posts } = Astro.props;
+
+// Sort posts by date
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Format date helper function
+function formatDate(date: Date | string): string {
+  const dateObj = date instanceof Date ? date : new Date(date);
+  return dateObj.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout
+  title={`Posts tagged "${tag}" | Blog`}
+  description={`Blog posts tagged with ${tag}`}
+>
+  <div class="container max-w-4xl mx-auto px-4 py-8">
+    <BackArrow href="/blog/" label="Back to blog home" extraClasses="mb-6" />
+    <h1 class="text-4xl font-sans mb-6">Posts tagged "{tag}"</h1>
+
+    <BlogList posts={sortedPosts} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from "@layouts/base.astro";
+import { getCollection } from "astro:content";
+import BackArrow from "@components/common/BackArrow.astro";
+import BlogList from "@components/blog/BlogList.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog", ({ data }) => {
+    // Filter out draft posts in production
+    return import.meta.env.PROD ? !data.draft : true;
+  });
+
+  // Get unique categories
+  const categories = [...new Set(allPosts.map((post) => post.data.category))];
+
+  return categories.map((category) => {
+    const filteredPosts = allPosts.filter(
+      (post) => post.data.category === category
+    );
+    const slug = category.toLowerCase().replace(/\s+/g, "-");
+
+    return {
+      params: { category: slug },
+      props: { category, posts: filteredPosts },
+    };
+  });
+}
+
+const { category, posts } = Astro.props;
+
+// Sort posts by date
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Format date helper function
+function formatDate(dateString: string | Date): string {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout
+  title={`${category} | Blog`}
+  description={`Blog posts in the ${category} category`}
+>
+  <div class="container max-w-4xl mx-auto px-4 py-8">
+    <BackArrow href="/blog/" label="Back to blog home" />
+    <h1 class="text-4xl font-sans mb-6">{category}</h1>
+    <BlogList posts={sortedPosts} />
+  </div>
+</BaseLayout>
