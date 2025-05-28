@@ -1,0 +1,35 @@
+---
+import BaseLayout from "@layouts/base.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import BackArrow from "@components/common/BackArrow.astro";
+import BlogList from "@components/blog/BlogList.astro";
+import { ListManager } from "@utils/ListManager.js";
+
+// Get all blog posts
+const allPosts = await getCollection("blog", ({ data }) => {
+  // Filter out draft posts in production
+  return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Sort posts by date in descending order
+const sortedPosts = allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const viewParam = Astro.url.searchParams.get("view") || "wide";
+const viewType = ["wide", "thumbnail", "text-only"].includes(viewParam)
+  ? (viewParam as "wide" | "thumbnail" | "text-only")
+  : "wide";
+---
+
+<BaseLayout
+  title="All Blog Posts | Nathan's Website"
+  description="Complete listing of blog posts"
+>
+  <div class="container max-w-4xl mx-auto px-4 py-8">
+    <BackArrow class="mb-6" label="Back to blog home" href="/blog/" />
+    <h1 class="text-4xl font-sans mb-6">All Blog Posts</h1>
+    <BlogList posts={sortedPosts} viewType={viewType} />
+  </div>
+</BaseLayout>

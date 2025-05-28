@@ -1,0 +1,149 @@
+---
+import BaseLayout from "@layouts/base.astro";
+import SocialLinks from "@components/social-links.astro";
+import resume from "@data/resume.json";
+import { getLink } from "@utils/links.js";
+import { Image } from "astro:assets";
+import profilePic from "@images/photos/nathan-whitehead-pfp.jpg";
+
+import PhotoCarousel from "@components/PhotoCarousel.jsx";
+
+// Import all early life photos
+import nathanBaby from "@images/photos/nathan-baby.jpg";
+import nathanOsuGrad from "@images/photos/nathan-osu-grad.jpg";
+import nathanGradParty from "@images/photos/nathan-grad-party.jpg";
+import okstateLibrary from "@images/photos/okstate-library.jpg";
+
+// Import all Washington photos
+import psnsCrew from "@images/photos/psns-crew.jpg";
+import skippingRocksBremerton from "@images/photos/skipping-rocks-bremerton.jpg";
+import psnsFilm from "@images/photos/psns-film.jpg";
+import seattle from "@images/photos/seattle.jpg";
+
+// Update the photo arrays with imported images
+const earlyLifePhotos = [
+  { src: nathanBaby, alt: "Nathan as a baby" },
+  { src: nathanOsuGrad, alt: "Nathan at OSU graduation" },
+  { src: nathanGradParty, alt: "Nathan at graduation party" },
+  { src: okstateLibrary, alt: "OSU library" },
+];
+
+const washingtonPhotos = [
+  { src: psnsCrew, alt: "PSNS Crew" },
+  { src: skippingRocksBremerton, alt: "Nathan skipping rocks in Bremerton" },
+  { src: psnsFilm, alt: "PSNS Shipfitters building" },
+  { src: seattle, alt: "Seattle, WA" },
+];
+---
+
+<BaseLayout title="About Nathan" description="Nathan's bio">
+  <div class="max-w-xl mx-auto px-4 flex flex-col">
+    <div
+      class="about-header shadow-sm text-center p-2 mb-2 bg-paper-200 dark:bg-zinc-800 rounded"
+    >
+      <h1 class="font-sans text-4xl">About Me</h1>
+      <Image
+        src={profilePic}
+        alt="Nathan Whitehead Profile"
+        class="w-[150px] h-[150px] rounded-full mx-auto mb-2 shadow-lg border border-gray-800"
+      />
+      <p>I'm an engineer based in Dallas, Texas.</p>
+      <SocialLinks />
+    </div>
+    <div class="blog-article-content">
+      <p class="text-center mb-4">
+        <a
+          href="/about/resume/"
+          class="inline-block px-4 py-2 bg-primary text-white font-medium rounded hover:bg-primary-600 transition-colors"
+        >
+          View my full resume here.
+        </a>
+      </p>
+      <div class="about-bio">
+        <h2
+          class="text-2xl font-sans border-b-1 border-paper-500 dark:border-zinc-500"
+        >
+          Bio
+        </h2>
+        <p>
+          I'm a software engineer with a strong background in web development
+          and a keen interest in machine learning. I enjoy solving complex
+          problems and building applications that make a difference.
+        </p>
+        <p>
+          I have a degree in Industrial Engineering and am working on a Master's
+          in Computer Science.
+        </p>
+      </div>
+
+      <div class="about-personal">
+        <h2
+          class="text-2xl font-sans border-b-1 border-paper-500 dark:border-zinc-500"
+        >
+          My story
+        </h2>
+        <div class="photo-grid mb-3">
+          <PhotoCarousel
+            photos={earlyLifePhotos}
+            label="Early Life Photos"
+            client:load
+          />
+        </div>
+        <p>
+          I was born in 2001 in Dallas, Texas, but I grew up in Edmond,
+          Oklahoma. I graduated from Edmond Santa Fe High School in 2019 and
+          went on to study Industrial Engineering at Oklahoma State University.
+          I graduated in 2023 with a Bachelor of Science in Industrial
+          Engineering.
+        </p>
+
+        <PhotoCarousel
+          photos={washingtonPhotos}
+          label="Time in Washington"
+          client:load
+          options={{
+            perPage: 1,
+            arrows: true,
+            pagination: true,
+            autoplay: true,
+            interval: 5000,
+          }}
+        />
+
+        <p>
+          Following my graduation, I moved to Bremerton, Washington to work as
+          an Industrial Engineer at Puget Sound Naval Shipyard. There I gained
+          valuable experience in the field, working on various projects and
+          collaborating with talented professionals.
+        </p>
+        <p>
+          In 2024, I made the decision to return to Dallas, Texas, where I am
+          currently pursuing a Master's degree in Computer Science at the
+          University of Texas at Dallas.
+        </p>
+
+        <h2
+          class="text-2xl font-sans border-b-1 border-paper-500 dark:border-zinc-500"
+        >
+          Hobbies
+        </h2>
+        <p>
+          I love to travel and explore new places, especially hiking in the
+          mountains and visiting new cities. I also enjoy photography, capturing
+          moments from my adventures and sharing them with friends and family.
+          Some of my photos can be found in the blog <a href="/blog/photos"
+            >under photos.</a
+          >
+        </p>
+        <p>
+          I also enjoy watching movies and playing video games. My movie diary
+          can be found on <a
+            href={getLink(resume.contact.links, "Letterboxd")}
+            target="_blank">letterboxd</a
+          > and some of my thoughts on my favorite films and games can be found in
+          the <a href="/blog/media">blog.</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

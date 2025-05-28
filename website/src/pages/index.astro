@@ -1,0 +1,140 @@
+---
+import BaseLayout from "@layouts/base.astro";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+// Define your navigation cards
+const navItems = [
+  {
+    title: "Blog",
+    description: "Read my latest thoughts, tutorials, and insights",
+    icon: "mdi:text-box-multiple",
+    url: "/blog/",
+    color: "bg-sky-100 dark:bg-sky-900",
+    iconColor: "text-sky-600 dark:text-sky-400",
+    borderColor: "border-sky-300 dark:border-sky-700",
+  },
+  {
+    title: "Projects",
+    description: "Explore my work, experiments, and coding projects",
+    icon: "mdi:cube-outline",
+    url: "/projects/",
+    color: "bg-emerald-100 dark:bg-emerald-900",
+    iconColor: "text-emerald-600 dark:text-emerald-400",
+    borderColor: "border-emerald-300 dark:border-emerald-700",
+  },
+  {
+    title: "About",
+    description: "Learn more about me, my background, and interests",
+    icon: "mdi:account-circle",
+    url: "/about/",
+    color: "bg-amber-100 dark:bg-amber-900",
+    iconColor: "text-amber-600 dark:text-amber-400",
+    borderColor: "border-amber-300 dark:border-amber-700",
+  },
+  {
+    title: "Resume",
+    description: "View my professional experience and skills",
+    icon: "mdi:file-document",
+    url: "/about/resume/",
+    color: "bg-violet-100 dark:bg-violet-900",
+    iconColor: "text-violet-600 dark:text-violet-400",
+    borderColor: "border-violet-300 dark:border-violet-700",
+  },
+  {
+    title: "Contact",
+    description: "Get in touch with me for collaborations or questions",
+    icon: "mdi:email",
+    url: "/about/contact/",
+    color: "bg-rose-100 dark:bg-rose-900",
+    iconColor: "text-rose-600 dark:text-rose-400",
+    borderColor: "border-rose-300 dark:border-rose-700",
+  },
+];
+---
+
+<BaseLayout title="Nathan's Website" description="Nathan's personal website">
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <!-- Hero Section -->
+    <section class="text-center mb-12">
+      <h1 class="text-5xl font-bold mb-4">Welcome to My Digital Space</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+        Explore my projects, read my thoughts, or get in touch. This is where I
+        share my work, ideas, and experiences.
+      </p>
+    </section>
+
+    <!-- Navigation Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.url}
+            class={`
+            flex flex-col h-full rounded-xl p-6 border-2 
+            ${item.color} ${item.borderColor}
+            transition-all duration-300 hover:scale-[1.02] 
+            hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-white/5
+          `}
+          >
+            <div class="mb-4">
+              <div
+                class={`inline-block p-3 rounded-full ${item.color} ${item.iconColor}`}
+              >
+                <Icon name={item.icon} class="w-8 h-8" />
+              </div>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">{item.title}</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
+              {item.description}
+            </p>
+            <div
+              class={`mt-auto inline-flex items-center font-medium ${item.iconColor}`}
+            >
+              <span>Explore</span>
+              <Icon name="mdi:arrow-right" class="w-5 h-5 ml-1" />
+            </div>
+          </a>
+        ))
+      }
+    </section>
+
+    <!-- Featured Content or Recent Updates -->
+    <section
+      class="mt-16 bg-paper-100 dark:bg-zinc-800 rounded-xl p-6 border border-gray-200 dark:border-zinc-700"
+    >
+      <h2 class="text-3xl font-bold mb-6">Recent Updates</h2>
+      <div class="space-y-4">
+        <!-- You can add dynamic content here from your blog posts or projects -->
+        <div class="p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm">
+          <p class="text-sm text-gray-500 dark:text-gray-400">May 24, 2025</p>
+          <h3 class="text-xl font-semibold">New Website Launch</h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Excited to share my newly redesigned personal website!
+          </p>
+        </div>
+
+        <div class="p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm">
+          <p class="text-sm text-gray-500 dark:text-gray-400">May 22, 2025</p>
+          <h3 class="text-xl font-semibold">
+            Latest Project: Data Visualization Tool
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300">
+            Check out my newest project focused on interactive data
+            visualization.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 text-center">
+        <a
+          href="/blog/"
+          class="inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors"
+        >
+          <span>View All Updates</span>
+          <Icon name="mdi:chevron-right" class="w-5 h-5 ml-1" />
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import CustomBlockquote from "@components/mdx/Blockquote.astro";
+import CodeBlock from "@components/mdx/CodeBlock.astro";
+
+// Accept Content component and other props from the parent
+const { Content, frontmatter } = Astro.props;
+
+const components = {
+  blockquote: CustomBlockquote,
+  // pre: CodeBlock,
+};
+---
+
+<div class="blog-content prose prose-paper dark:prose-invert max-w-xl mx-auto">
+  <Content components={components} />
+</div>

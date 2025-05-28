@@ -1,0 +1,183 @@
+---
+// import { slide } from "astro:transitions";
+import PostCard from "./PostCard.astro";
+import { ListManager } from "@utils/ListManager.js";
+
+interface Props {
+  posts: Array<any>;
+  viewType?: "wide" | "thumbnail" | "text-only";
+  listId?: string;
+}
+
+const {
+  posts,
+  viewType = "wide",
+  listId = "blog-posts-container",
+} = Astro.props;
+
+// Get container class based on view type
+// const containerClass = ListManager.getContainerClasses(viewType);
+
+// const activeClasses = "active bg-primary text-white";
+---
+
+<div class="view-switcher flex gap-2 items-center">
+  <div class="btn-group">
+    <button
+      class={`view-btn px-2 py-1 bg-paper-200 dark:bg-zinc-700 rounded-l active:bg-primary active:text-white ${viewType === "wide" ? "active" : ""}`}
+      data-view="wide"
+      aria-label="Wide view"
+    >
+      <span class="material-symbols-outlined"> view_agenda </span>
+    </button>
+    <button
+      class={`view-btn px-2 py-1 bg-paper-200 dark:bg-zinc-700 rounded-l active:bg-primary active:text-white ${viewType === "thumbnail" ? "active" : ""}`}
+      data-view="thumbnail"
+      aria-label="Thumbnail view"
+    >
+      <span class="material-symbols-outlined"> grid_view </span>
+    </button>
+    <button
+      class={`view-btn px-2 py-1 bg-paper-200 dark:bg-zinc-700 rounded-l active:bg-primary active:text-white ${viewType === "text-only" ? "active" : ""}`}
+      data-view="text-only"
+      aria-label="Text-only view"
+    >
+      <span class="material-symbols-outlined"> view_headline </span>
+    </button>
+  </div>
+</div>
+
+<!-- <div
+  id="view-container"
+  class="view-container relative overflow-hidden min-h-[300px]"
+> -->
+<div
+  id={`${listId}-wide`}
+  data-view-type="wide"
+  class={`view-panel ${ListManager.getContainerClasses("wide")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
+  transition:name="blog-view-container"
+>
+  {
+    posts.map((post) => (
+      <PostCard
+        post={post}
+        variant="wide"
+        transition:name={`post-card-${post.id}`}
+      />
+    ))
+  }
+</div>
+<div
+  id={`${listId}-thumbnail`}
+  data-view-type="thumbnail"
+  class={`view-panel ${ListManager.getContainerClasses("thumbnail")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
+  transition:name="blog-view-container"
+>
+  {
+    posts.map((post) => (
+      <PostCard
+        post={post}
+        variant="thumbnail"
+        transition:name={`post-card-${post.id}`}
+      />
+    ))
+  }
+</div>
+<div
+  id={`${listId}-text-only`}
+  data-view-type="text-only"
+  class={`view-panel ${ListManager.getContainerClasses("text-only")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
+  transition:name="blog-view-container"
+>
+  {
+    posts.map((post) => (
+      <PostCard
+        post={post}
+        variant="text-only"
+        transition:name={`post-card-${post.id}`}
+      />
+    ))
+  }
+</div>
+
+<script>
+  import { init } from "astro/virtual-modules/prefetch.js";
+
+  function updateButtons(viewType: string) {
+    const buttons = document.querySelectorAll(".view-btn");
+    buttons.forEach((button) => {
+      button.classList.remove("active");
+      if (button.getAttribute("data-view") === viewType)
+        button.classList.add("active");
+    });
+  }
+
+  function updateViews(viewType: string) {
+    const views = document.querySelectorAll('[id^="blog-posts-container-"]');
+    views.forEach((view) => view.classList.add("hidden"));
+    const selectedView = document.getElementById(
+      `blog-posts-container-${viewType}`
+    );
+    if (selectedView) selectedView.classList.remove("hidden");
+  }
+
+  function updateURLWithoutReload(viewType: string) {
+    // create a new url object based on the current URL
+    const url = new URL(window.location.href);
+    // set the view parameter
+    url.searchParams.set("view", viewType);
+    // update the URL without reloading the page
+    window.history.pushState({}, "", url);
+  }
+
+  function getURLViewType() {
+    const url = new URL(window.location.href);
+    const viewParam = url.searchParams.get("view");
+    return viewParam && ["wide", "thumbnail", "text-only"].includes(viewParam)
+      ? viewParam
+      : "wide";
+  }
+
+  function initializeBlogList() {
+    const currentView = getURLViewType();
+    updateButtons(currentView);
+    // updateViews(currentView);
+    const initialView = document.querySelector(
+      `.view-panel[data-view-type="${currentView}"]`
+    );
+    if (initialView) {
+      // Set initial container height
+      const container = document.getElementById("view-container");
+      if (container) {
+        container.style.minHeight = `${initialView.scrollHeight + 100}px`;
+      }
+      initialView.classList.remove("hidden");
+      console.log(`Made ${currentView} view visible`);
+    } else {
+      console.error(`Initial view panel for ${currentView} not found`);
+    }
+
+    const viewButtons = document.querySelectorAll(".view-btn");
+
+    viewButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const viewType = button.getAttribute("data-view");
+        if (!viewType) return;
+
+        updateButtons(viewType);
+        updateViews(viewType);
+        updateURLWithoutReload(viewType);
+      });
+    });
+  }
+
+  // Client-side code to handle view switching
+  document.addEventListener("DOMContentLoaded", initializeBlogList);
+  document.addEventListener("astro:page-load", initializeBlogList);
+  // Handle browser back/forward navigation
+  window.addEventListener("popstate", () => {
+    const newViewType = getURLViewType();
+    initializeBlogList();
+    console.log(`Navigation: switching to view: ${newViewType}`);
+  });
+</script>
