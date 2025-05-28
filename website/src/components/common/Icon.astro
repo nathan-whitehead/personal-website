@@ -1,0 +1,62 @@
+---
+/**
+ * In the future, this component could support many icons that are
+ * more complex than just things found in material design icons.
+ *
+ * I want to support variable icons, for example simplified based on the
+ * size, varying icons based on whether there is color or not, and
+ * potentially even icons that are animated.
+ *
+ * e.g., if the size is small, use a simplified version of the icon,
+ * or if the end page uses color, use a colored version of the icon.
+ */
+
+// Import your SVG components
+import Letterboxd from "./icons/Letterboxd.astro";
+import Hedgehog from "./icons/Hedgehog.astro";
+import LinkedIn from "./icons/LinkedIn.astro";
+import GitHub from "./icons/GitHub.astro";
+import Twitter from "./icons/Twitter.astro";
+import Instagram from "./icons/Instagram.astro";
+import Email from "./icons/Email.astro";
+
+// Define props
+type IconName =
+  | "letterboxd"
+  | "hedgehog"
+  | "linkedin"
+  | "github"
+  | "twitter"
+  | "instagram"
+  | "email";
+interface Props {
+  name: IconName;
+  size?: string;
+  class?: string;
+}
+
+// Destructure props with defaults
+const { name, size = "1em", class: className = "" } = Astro.props;
+
+// Map of available icons
+const icons = {
+  letterboxd: Letterboxd,
+  hedgehog: Hedgehog,
+  linkedin: LinkedIn,
+  github: GitHub,
+  twitter: Twitter,
+  instagram: Instagram,
+  email: Email,
+  // Add other icons as needed
+};
+
+const IconComponent = icons[name] || null;
+---
+
+{
+  IconComponent ? (
+    <IconComponent size={size} class={className} />
+  ) : (
+    <span class="icon-error">Icon "{name}" not found</span>
+  )
+}

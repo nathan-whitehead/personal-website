@@ -1,0 +1,45 @@
+---
+// Import components
+import HeadMeta from "@components/layout/HeadMeta.astro";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+
+// Define props with default values
+export interface Props {
+  title?: string;
+  description?: string;
+  css?: string;
+  page?: any;
+}
+
+const {
+  title = "Nathan's Website",
+  description = "Nathan's personal website",
+  css,
+  page,
+} = Astro.props;
+
+// Get the current year for the footer
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <HeadMeta title={title} description={description} css={css}>
+    <slot name="head" />
+  </HeadMeta>
+
+  <body
+    class="bg-paper-50 font-serif dark:bg-zinc-900 dark:text-paper-50 flex flex-col min-h-screen"
+  >
+    <Header />
+
+    <main class="flex-grow py-4 bg-paper-50 dark:bg-zinc-900">
+      <slot />
+    </main>
+
+    <Footer year={currentYear}>
+      <slot name="footer" />
+    </Footer>
+  </body>
+</html>
