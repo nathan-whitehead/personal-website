@@ -1,0 +1,36 @@
+---
+export interface Props {
+  year: number;
+}
+
+const { year } = Astro.props;
+
+import { Image } from "astro:assets";
+import flagSvg from "@images/icons/flags/Flag_of_the_United_States.svg";
+---
+
+<footer class="w-full py-2 bg-paper-200 dark:bg-zinc-800 text-center mt-auto">
+  <div class="container mx-auto">
+    <p>&copy; {year} - Nathan</p>
+    <p>
+      Built with love in the United States <Image
+        src={flagSvg}
+        alt="US Flag"
+        class="h-[0.8rem] width-auto inline-block"
+        loading="eager"
+      />
+    </p>
+    <div>
+      <a class="hover:text-primary" href="https://github.com/nathan-whitehead"
+        >GitHub</a
+      > |
+      <a
+        class="hover:text-primary"
+        href="https://linkedin.com/in/nathan-whitehead0">LinkedIn</a
+      > |
+      <a class="hover:text-primary" href="/about/contact/">Contact</a>
+    </div>
+
+    <slot />
+  </div>
+</footer>

@@ -1,0 +1,41 @@
+---
+// Helper component to render nested lists of details
+interface Props {
+  details: Array<string | Record<string, any>>;
+}
+
+const { details } = Astro.props;
+
+// Function to check if an item is a string
+function isString(item: any): item is string {
+  return typeof item === "string";
+}
+
+// Function to sanitize text (removing ** markers)
+function sanitize(text: string): string {
+  return text.replace(/\*\*/g, "");
+}
+---
+
+<ul class="list-disc pl-6">
+  {
+    details.map((detail) => (
+      <li>
+        {isString(detail) ? (
+          <Fragment set:html={detail} />
+        ) : (
+          Object.entries(detail).map(([key, value]) => (
+            <Fragment>
+              <strong set:html={sanitize(key.replace(/\*\*:/, ":"))} />
+              {Array.isArray(value) ? (
+                <Astro.self details={value} />
+              ) : (
+                <Fragment set:html={value} />
+              )}
+            </Fragment>
+          ))
+        )}
+      </li>
+    ))
+  }
+</ul>

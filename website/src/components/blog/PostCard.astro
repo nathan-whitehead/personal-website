@@ -1,0 +1,135 @@
+---
+import { Image } from "astro:assets";
+
+// Define the props for the component
+interface Props {
+  post: {
+    slug: string;
+    data: {
+      title: string;
+      date: Date | string;
+      category: string;
+      description: string;
+      thumbnail?: {
+        src: any;
+        alt?: string;
+      };
+    };
+  };
+  variant?: "wide" | "thumbnail" | "text-only";
+  id?: string;
+}
+
+const { post, variant = "wide", id } = Astro.props;
+const postId = id || `post-${post.slug}`;
+
+// Format date helper function
+function formatDate(date: Date | string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+{/* Render the post card based on the variant */}
+{
+  variant === "wide" && (
+    <div
+      id={postId}
+      class="post-card p-6 bg-paper-100 dark:bg-zinc-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+    >
+      <div class="flex flex-col md:flex-row md:items-start gap-4">
+        {post.data.thumbnail && (
+          <div class="post-image w-full md:w-1/4 flex-shrink-0">
+            <Image
+              src={post.data.thumbnail.src}
+              alt={post.data.thumbnail.alt || post.data.title}
+              class="w-full h-auto rounded-md aspect-video object-cover"
+            />
+          </div>
+        )}
+        <div class="post-content flex-grow">
+          <h2 class="text-2xl font-sans mb-2">
+            <a href={`/blog/${post.slug}/`} class="hover:text-primary">
+              {post.data.title}
+            </a>
+          </h2>
+          <div class="post-meta text-paper-700 dark:text-paper-400 mb-2 flex gap-4 text-sm">
+            <span>{formatDate(post.data.date)}</span>
+            <span>{post.data.category}</span>
+          </div>
+          <p class="text-paper-800 dark:text-paper-300">
+            {post.data.description}
+          </p>
+          <div class="mt-3">
+            <a
+              href={`/blog/${post.slug}/`}
+              class="text-primary hover:underline"
+            >
+              Read more →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{/* Thumbnail card - grid style with square image */}
+{
+  variant === "thumbnail" && (
+    <div
+      id={postId}
+      class="post-card bg-paper-100 dark:bg-zinc-800 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+    >
+      {post.data.thumbnail ? (
+        <div class="aspect-square">
+          <Image
+            src={post.data.thumbnail.src}
+            alt={post.data.thumbnail.alt || post.data.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      ) : (
+        <div class="aspect-square bg-paper-200 dark:bg-zinc-700 flex items-center justify-center">
+          <span class="text-paper-500 dark:text-paper-400">No image</span>
+        </div>
+      )}
+      <div class="p-4">
+        <h2 class="text-lg font-sans mb-2 line-clamp-2">
+          <a href={`/blog/${post.slug}/`} class="hover:text-primary">
+            {post.data.title}
+          </a>
+        </h2>
+        <div class="post-meta text-paper-700 dark:text-paper-400 text-xs mb-2">
+          <span>{formatDate(post.data.date)}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+{/* Text-only card - compact and minimalist */}
+{
+  variant === "text-only" && (
+    <div
+      id={postId}
+      class="post-card p-4 bg-paper-100 dark:bg-zinc-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+    >
+      <h2 class="text-lg font-sans">
+        <a href={`/blog/${post.slug}/`} class="hover:text-primary">
+          {post.data.title}
+        </a>
+      </h2>
+      <div class="post-meta text-paper-700 dark:text-paper-400 text-xs mb-1">
+        <span>{formatDate(post.data.date)}</span> ·{" "}
+        <span>{post.data.category}</span>
+      </div>
+      <p class="text-paper-800 dark:text-paper-300 text-sm line-clamp-2">
+        {post.data.description}
+      </p>
+    </div>
+  )
+}
