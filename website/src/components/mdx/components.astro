@@ -1,0 +1,43 @@
+---
+export const Blockquote = (props: { children: any }) => {
+  return (
+    <blockquote
+      class={`
+      my-6 pl-6 border-l-4 
+      border-primary-500 
+      [&>blockquote]:border-primary-700 
+      dark:[&>blockquote]:border-primary-400 
+      bg-paper-200 
+      [&>blockquote]:bg-paper-300 
+      dark:bg-zinc-800 
+      dark:[&>blockquote]:bg-zinc-700
+      py-4 px-2 rounded-r
+      not-italic
+      `}
+    >
+      {props.children}
+    </blockquote>
+  );
+};
+
+export const H1 = (props: { children: any }) => {
+  return (
+    <h1 class="font-sans font-4xl border-b-1 border-primary-500">
+      {props.children}
+    </h1>
+  );
+};
+
+// You can add more components below
+export const H2 = (props: { children: any }) => {
+  return (
+    <h2 class="font-sans font-3xl border-b-1 border-paper-600 dark:border-zinc-700">
+      {props.children}
+    </h2>
+  );
+};
+
+export const H3 = (props: { children: any }) => {
+  return <h3 class="font-sans font-2xl">{props.children}</h3>;
+};
+---

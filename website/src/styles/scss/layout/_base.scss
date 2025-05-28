@@ -1,0 +1,113 @@
+@use "@styles/scss/variables" as vars;
+@use "@styles/scss/mixins" as mix;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @include mix.body-font;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  @include mix.transition(background-color, 0.3s);
+  @include mix.transition(color, 0.3s);
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include mix.heading-font;
+  color: var(--bs-heading-color);
+  margin: 1.5rem 0 1rem;
+}
+
+a {
+  color: var(--bs-link-color);
+  text-decoration: none;
+  @include mix.transition(color);
+
+  &:hover {
+    color: var(--bs-link-hover-color);
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: var(--bs-link-color);
+  }
+}
+
+main {
+  min-height: 75vh;
+}
+
+// Font utility classes
+.eb-garamond-heading {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.eb-garamond-body {
+  font-family: "EB Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.font-sans-serif {
+  font-family: vars.$font-family-sans-serif;
+}
+.font-serif {
+  font-family: vars.$font-family-serif;
+}
+.font-monospace {
+  font-family: vars.$font-family-monospace;
+}
+
+// Blog specific styles
+.blog-image {
+  max-width: 80%;
+  height: auto;
+  margin: 1rem auto;
+  display: block;
+
+  @include mix.respond-above(sm) {
+    max-width: 100%;
+  }
+}
+
+// Photo grid
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: vars.$border-radius;
+  }
+}
+
+// Button styles
+.btn-return {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--bs-primary);
+  color: vars.$light-text !important;
+  border-radius: vars.$border-radius;
+  font-weight: 500;
+  text-decoration: none;
+  @include mix.transition(background-color);
+
+  &:hover {
+    background-color: var(--bs-accent, vars.$light-accent);
+    text-decoration: none;
+  }
+}
