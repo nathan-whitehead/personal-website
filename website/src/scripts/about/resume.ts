@@ -12,25 +12,6 @@ function initializeResume() {
   let navHeight = resumeNav?.offsetHeight || 0;
   let headerHeight = siteHeader?.offsetHeight || 0;
 
-  // Function to check if all sections are open
-  function allSectionsOpen() {
-    // Use current query to get up-to-date elements
-    const currentDetails = document.querySelectorAll("details");
-    return Array.from(currentDetails).every((details) => details.open);
-  }
-
-  // Function to update the toggle button icon
-  function updateToggleButton() {
-    // Always get the current toggle button
-    const currentToggleBtn = document.getElementById("toggleAllSections");
-    if (!currentToggleBtn) return;
-
-    const icon = currentToggleBtn.querySelector(".material-symbols-outlined");
-    if (icon) {
-      icon.textContent = allSectionsOpen() ? "unfold_less" : "unfold_more";
-    }
-  }
-
   // Function to scroll to an element with offset for the sticky nav
   function scrollToWithOffset(element: HTMLElement) {
     const elementPosition = element.getBoundingClientRect().top;
@@ -72,46 +53,6 @@ function initializeResume() {
 
   // immediately set initial position
   updateResumeNavPosition();
-
-  // Handle toggle button clicks
-  function handleToggleClick() {
-    // If all sections are open, close them all; otherwise, open them all
-    const newState = !allSectionsOpen();
-
-    // Get current details elements to ensure we're working with up-to-date DOM
-    const currentDetails = document.querySelectorAll("details");
-    currentDetails.forEach((details) => {
-      details.open = newState;
-    });
-
-    updateToggleButton();
-  }
-
-  // Clone each details element to remove all event listeners
-  Array.from(detailsElements).forEach((details) => {
-    const wasOpen = details.open;
-    const clone = details.cloneNode(true) as HTMLDetailsElement;
-    clone.open = wasOpen;
-    details.parentNode?.replaceChild(clone, details);
-  });
-
-  // Get fresh references after DOM changes
-  detailsElements = document.querySelectorAll("details");
-
-  // Add toggle event listeners to the fresh details elements
-  detailsElements.forEach((details) => {
-    details.addEventListener("toggle", updateToggleButton);
-  });
-
-  // Clone and replace the toggle button
-  const newToggleBtn = toggleBtn.cloneNode(true);
-  toggleBtn.parentNode?.replaceChild(newToggleBtn, toggleBtn);
-
-  // Update our reference to the new button
-  toggleBtn = document.getElementById("toggleAllSections");
-
-  // Add the event listener to the new button
-  toggleBtn?.addEventListener("click", handleToggleClick);
 
   // Handle URL hash navigation
   function handleHashNavigation() {
