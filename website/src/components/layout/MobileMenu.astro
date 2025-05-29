@@ -1,0 +1,33 @@
+---
+// frontmatter
+---
+
+<mobile-menu>
+  <button
+    class="md:hidden p-2 rounded hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
+    id="mobileMenuToggle"
+    aria-label="Toggle navigation"
+  >
+    <i class="bi bi-list text-xl"></i>
+  </button>
+</mobile-menu>
+
+<script>
+  class MobileMenu extends HTMLElement {
+    connectedCallback() {
+      const toggleButton = this.querySelector("button");
+      const menu = document.querySelector("#mobileMenu");
+
+      if (!toggleButton || !menu) {
+        console.error("Mobile menu toggle button or menu not found.");
+        return;
+      }
+
+      toggleButton.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    }
+  }
+
+  customElements.define("mobile-menu", MobileMenu);
+</script>

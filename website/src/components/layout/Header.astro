@@ -5,6 +5,8 @@ import { Image } from "astro:assets";
 import { getLink } from "@utils/links.js";
 import hedgehogImage from "@images/icons/hedgehog/hedgehog.png";
 import { PreferencesManager } from "@utils/preferences.js";
+import ThemeButton from "./ThemeButton.astro";
+import MobileMenu from "./MobileMenu.astro";
 ---
 
 <header
@@ -17,14 +19,14 @@ import { PreferencesManager } from "@utils/preferences.js";
   `}
 >
   <div class="mx-auto px-2 bg-paper-200 w-full dark:bg-zinc-800">
-    <nav class="flex justify-between items-center">
+    <nav class="flex justify-between items-center" aria-label="Main navigation">
       <a
         href="/"
         class="site-title font-title overflow-x-hidden whitespace-nowrap flex items-center"
       >
         <Image
           src={hedgehogImage}
-          alt="Site icon: A cartoon hedgehog"
+          alt="A cartoon hedgehog"
           class="h-12 w-auto mr-2"
           loading="eager"
         />
@@ -34,8 +36,8 @@ import { PreferencesManager } from "@utils/preferences.js";
         >
       </a>
 
-      <div class="flex items-center space-x-6 font-sans" id="navbarMain">
-        <ul class="hidden md:flex items-center space-x-6">
+      <div class="flex items-center font-sans" id="navbarMain">
+        <ul class="hidden md:flex items-center space-x-6 mx-4">
           <li class="nav-item">
             <a class={navLinkClasses} href="/">HOME</a>
           </li>
@@ -49,99 +51,88 @@ import { PreferencesManager } from "@utils/preferences.js";
             <a class={navLinkClasses} href="/projects/">PROJECTS</a>
           </li>
         </ul>
-        <button
+        <ThemeButton
           id="themeToggle"
           class="p-2 rounded m-0 hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
           aria-label="Toggle dark mode"
-        >
-          <span id="theme-toggle-icon" class="material-symbols-outlined">
-            light_mode
-          </span>
-        </button>
-
-        <button
-          class="md:hidden p-2 rounded hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
-          id="mobileMenuToggle"
-          aria-label="Toggle navigation"
-        >
-          <i class="bi bi-list text-xl"></i>
-        </button>
+        />
+        <MobileMenu />
       </div>
     </nav>
-
-    <div
-      id="mobileMenu"
-      class="hidden mt-4 pt-4 border-t bg-paper-200 border-paper-300 dark:bg-zinc-800 dark:border-zinc-700 md:hidden font-sans"
-    >
-      <div class="columns-2">
-        <ul class="space-y-3">
-          <li>
-            <a
-              href="/"
-              class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
-              >HOME</a
-            >
-          </li>
-          <li>
-            <a
-              href="/blog/"
-              class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
-              >BLOG</a
-            >
-          </li>
-          <li>
-            <a
-              href="/about/"
-              class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
-              >ABOUT</a
-            >
-          </li>
-          <li>
-            <a
-              href="/projects/"
-              class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
-              >PROJECTS</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
+
+  <nav
+    id="mobileMenu"
+    aria-label="Mobile navigation"
+    class="hidden w-full border-t bg-paper-200 border-paper-300 dark:bg-zinc-800 dark:border-zinc-700 md:hidden font-sans py-4"
+  >
+    <div class="columns-2">
+      <ul class="space-y-3 w-full">
+        <li>
+          <a
+            href="/"
+            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+            >HOME</a
+          >
+        </li>
+        <li>
+          <a
+            href="/blog/"
+            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+            >BLOG</a
+          >
+        </li>
+        <li>
+          <a
+            href="/about/"
+            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+            >ABOUT</a
+          >
+        </li>
+        <li>
+          <a
+            href="/projects/"
+            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+            >PROJECTS</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id="header-offset" class="h-16"></div>
 </header>
 
-<div id="header-offset" class="h-16"></div>
+<!-- <script>
+    import { ThemeManager } from "@utils/theme-manager.js";
 
-<script>
-  import { ThemeManager } from "@utils/theme-manager.js";
+    function initializeHeader() {
+      ThemeManager.initialize();
+      ThemeManager.setupEventListeners();
 
-  function initializeHeader() {
-    ThemeManager.initialize();
-    ThemeManager.setupEventListeners();
+      // Setup mobile menu (this could also be moved to its own module)
+      const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+      const mobileMenu = document.getElementById("mobileMenu");
 
-    // Setup mobile menu (this could also be moved to its own module)
-    const mobileMenuToggle = document.getElementById("mobileMenuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    if (mobileMenuToggle && mobileMenu) {
-      // Clone to remove old listeners
-      const newMenuToggle = mobileMenuToggle.cloneNode(true);
-      if (mobileMenuToggle.parentNode) {
-        mobileMenuToggle.parentNode.replaceChild(
-          newMenuToggle,
-          mobileMenuToggle
-        );
-      }
-
-      newMenuToggle.addEventListener("click", () => {
-        const menuElement = document.getElementById("mobileMenu");
-        if (menuElement) {
-          menuElement.classList.toggle("hidden");
+      if (mobileMenuToggle && mobileMenu) {
+        // Clone to remove old listeners
+        const newMenuToggle = mobileMenuToggle.cloneNode(true);
+        if (mobileMenuToggle.parentNode) {
+          mobileMenuToggle.parentNode.replaceChild(
+            newMenuToggle,
+            mobileMenuToggle
+          );
         }
-      });
-    }
-  }
 
-  // Initialize theme system
-  document.addEventListener("DOMContentLoaded", initializeHeader);
-  document.addEventListener("astro:page-load", initializeHeader);
-</script>
+        newMenuToggle.addEventListener("click", () => {
+          const menuElement = document.getElementById("mobileMenu");
+          if (menuElement) {
+            menuElement.classList.toggle("hidden");
+          }
+        });
+      }
+    }
+
+    // Initialize theme system
+    // document.addEventListener("DOMContentLoaded", initializeHeader);
+    // document.addEventListener("astro:page-load", initializeHeader);
+  </script> -->
