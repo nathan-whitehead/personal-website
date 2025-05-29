@@ -16,7 +16,7 @@ interface Props {
       };
     };
   };
-  variant?: "wide" | "thumbnail" | "text-only";
+  variant?: "wide" | "thumbnail" | "compact";
   id?: string;
 }
 
@@ -113,7 +113,7 @@ function formatDate(date: Date | string) {
 
 {/* Text-only card - compact and minimalist */}
 {
-  variant === "text-only" && (
+  variant === "compact" && (
     <div
       id={postId}
       class="post-card p-4 bg-paper-100 dark:bg-zinc-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"

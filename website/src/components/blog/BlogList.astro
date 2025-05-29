@@ -5,7 +5,7 @@ import { ListManager } from "@utils/ListManager.js";
 
 interface Props {
   posts: Array<any>;
-  viewType?: "wide" | "thumbnail" | "text-only";
+  viewType?: "wide" | "thumbnail" | "compact";
   listId?: string;
 }
 
@@ -14,170 +14,320 @@ const {
   viewType = "wide",
   listId = "blog-posts-container",
 } = Astro.props;
-
-// Get container class based on view type
-// const containerClass = ListManager.getContainerClasses(viewType);
-
-// const activeClasses = "active bg-primary text-white";
 ---
 
-<div class="view-switcher flex gap-2 items-center">
-  <div class="btn-group">
-    <button
-      class={`view-btn px-2 py-1 bg-paper-200 dark:bg-zinc-700 rounded-l active:bg-primary active:text-white ${viewType === "wide" ? "active" : ""}`}
-      data-view="wide"
-      aria-label="Wide view"
+<blog-list data-list-id={listId} data-initial-view={viewType}>
+  <div class="view-switcher flex justify-end mb-2">
+    <div
+      class="btn-group inline-flex overflow-hidden divide-x-1 divide-solid divide-paper-300 dark:divide-zinc-700 rounded-full border-2 border-paper-300 dark:border-zinc-700"
     >
-      <span class="material-symbols-outlined"> view_agenda </span>
-    </button>
-    <button
-      class={`view-btn px-2 py-1 bg-paper-200 dark:bg-zinc-700 rounded-l active:bg-primary active:text-white ${viewType === "thumbnail" ? "active" : ""}`}
-      data-view="thumbnail"
-      aria-label="Thumbnail view"
-    >
-      <span class="material-symbols-outlined"> grid_view </span>
-    </button>
-    <button
-      class={`view-btn px-2 py-1 bg-paper-200 dark:bg-zinc-700 rounded-l active:bg-primary active:text-white ${viewType === "text-only" ? "active" : ""}`}
-      data-view="text-only"
-      aria-label="Text-only view"
-    >
-      <span class="material-symbols-outlined"> view_headline </span>
-    </button>
+      <button
+        class:list={[
+          "view-btn",
+          "px-2 py-1",
+          "bg-paper-100 dark:bg-zinc-900",
+          // "border-r border-paper-300 dark:border-zinc-700",
+          "hover:bg-paper-200 dark:hover:bg-zinc-800 transition-colors",
+          "active:bg-primary active:hover:bg-primary-600 active:text-white",
+          "flex items-center justify-center",
+          // viewType === "wide"
+          //   ? "bg-primary hover:bg-primary-600 text-white"
+          //   : "",
+        ]}
+        data-view="wide"
+        aria-label="Wide view"
+      >
+        <span class="material-symbols-outlined text-sm"> view_agenda </span>
+      </button>
+      <button
+        class:list={[
+          "view-btn",
+          "px-2 py-1",
+          "bg-paper-100 dark:bg-zinc-900",
+          // "border-r border-paper-300 dark:border-zinc-700",
+          "hover:bg-paper-200 dark:hover:bg-zinc-800 transition-colors",
+          "active:bg-primary active:hover:bg-primary-600 active:text-white",
+          "flex items-center justify-center",
+          // viewType === "thumbnail"
+          //   ? "bg-primary hover:bg-primary-600 text-white"
+          //   : "",
+        ]}
+        data-view="thumbnail"
+        aria-label="Thumbnail view"
+      >
+        <span class="material-symbols-outlined text-sm"> grid_view </span>
+      </button>
+      <button
+        class:list={[
+          "view-btn",
+          "px-2 py-1",
+          "bg-paper-100 dark:bg-zinc-900",
+          // "border-r border-paper-300 dark:border-zinc-700",
+          "hover:bg-paper-200 dark:hover:bg-zinc-800 transition-colors",
+          "active:bg-primary active:hover:bg-primary-600 active:text-white",
+          "flex items-center justify-center",
+          // viewType === "compact"
+          //   ? "bg-primary hover:bg-primary-600 text-white"
+          //   : "",
+        ]}
+        data-view="compact"
+        aria-label="Text-only view"
+      >
+        <span class="material-symbols-outlined text-sm"> view_headline </span>
+      </button>
+    </div>
   </div>
-</div>
 
-<!-- <div
-  id="view-container"
-  class="view-container relative overflow-hidden min-h-[300px]"
-> -->
-<div
-  id={`${listId}-wide`}
-  data-view-type="wide"
-  class={`view-panel ${ListManager.getContainerClasses("wide")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
-  transition:name="blog-view-container"
->
-  {
-    posts.map((post) => (
-      <PostCard
-        post={post}
-        variant="wide"
-        transition:name={`post-card-${post.id}`}
-      />
-    ))
-  }
-</div>
-<div
-  id={`${listId}-thumbnail`}
-  data-view-type="thumbnail"
-  class={`view-panel ${ListManager.getContainerClasses("thumbnail")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
-  transition:name="blog-view-container"
->
-  {
-    posts.map((post) => (
-      <PostCard
-        post={post}
-        variant="thumbnail"
-        transition:name={`post-card-${post.id}`}
-      />
-    ))
-  }
-</div>
-<div
-  id={`${listId}-text-only`}
-  data-view-type="text-only"
-  class={`view-panel ${ListManager.getContainerClasses("text-only")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
-  transition:name="blog-view-container"
->
-  {
-    posts.map((post) => (
-      <PostCard
-        post={post}
-        variant="text-only"
-        transition:name={`post-card-${post.id}`}
-      />
-    ))
-  }
-</div>
+  <div
+    id={`${listId}-wide`}
+    data-view-type="wide"
+    class={`view-panel ${ListManager.getContainerClasses("wide")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
+    transition:name="blog-view-container"
+  >
+    {
+      posts.map((post) => (
+        <PostCard
+          post={post}
+          variant="wide"
+          transition:name={`post-card-${post.id}`}
+        />
+      ))
+    }
+  </div>
+  <div
+    id={`${listId}-thumbnail`}
+    data-view-type="thumbnail"
+    class={`view-panel ${ListManager.getContainerClasses("thumbnail")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
+    transition:name="blog-view-container"
+  >
+    {
+      posts.map((post) => (
+        <PostCard
+          post={post}
+          variant="thumbnail"
+          transition:name={`post-card-${post.id}`}
+        />
+      ))
+    }
+  </div>
+  <div
+    id={`${listId}-compact`}
+    data-view-type="compact"
+    class={`view-panel ${ListManager.getContainerClasses("compact")} ${viewType === "thumbnail" ? "z-10" : "hidden"}`}
+    transition:name="blog-view-container"
+  >
+    {
+      posts.map((post) => (
+        <PostCard
+          post={post}
+          variant="compact"
+          transition:name={`post-card-${post.id}`}
+        />
+      ))
+    }
+  </div>
+</blog-list>
 
 <script>
-  import { init } from "astro/virtual-modules/prefetch.js";
+  class BlogList extends HTMLElement {
+    private listId: string;
+    private viewButtons: NodeListOf<HTMLButtonElement> | null = null;
+    private viewPanels: NodeListOf<HTMLElement> | null = null;
 
-  function updateButtons(viewType: string) {
-    const buttons = document.querySelectorAll(".view-btn");
-    buttons.forEach((button) => {
-      button.classList.remove("active");
-      if (button.getAttribute("data-view") === viewType)
-        button.classList.add("active");
-    });
-  }
-
-  function updateViews(viewType: string) {
-    const views = document.querySelectorAll('[id^="blog-posts-container-"]');
-    views.forEach((view) => view.classList.add("hidden"));
-    const selectedView = document.getElementById(
-      `blog-posts-container-${viewType}`
-    );
-    if (selectedView) selectedView.classList.remove("hidden");
-  }
-
-  function updateURLWithoutReload(viewType: string) {
-    // create a new url object based on the current URL
-    const url = new URL(window.location.href);
-    // set the view parameter
-    url.searchParams.set("view", viewType);
-    // update the URL without reloading the page
-    window.history.pushState({}, "", url);
-  }
-
-  function getURLViewType() {
-    const url = new URL(window.location.href);
-    const viewParam = url.searchParams.get("view");
-    return viewParam && ["wide", "thumbnail", "text-only"].includes(viewParam)
-      ? viewParam
-      : "wide";
-  }
-
-  function initializeBlogList() {
-    const currentView = getURLViewType();
-    updateButtons(currentView);
-    // updateViews(currentView);
-    const initialView = document.querySelector(
-      `.view-panel[data-view-type="${currentView}"]`
-    );
-    if (initialView) {
-      // Set initial container height
-      const container = document.getElementById("view-container");
-      if (container) {
-        container.style.minHeight = `${initialView.scrollHeight + 100}px`;
-      }
-      initialView.classList.remove("hidden");
-      console.log(`Made ${currentView} view visible`);
-    } else {
-      console.error(`Initial view panel for ${currentView} not found`);
+    constructor() {
+      super();
+      this.listId = this.getAttribute("data-list-id") || "blog-posts-container";
     }
 
-    const viewButtons = document.querySelectorAll(".view-btn");
+    connectedCallback() {
+      this.viewButtons = this.querySelectorAll(".view-btn");
+      this.viewPanels = this.querySelectorAll(".view-panel");
+      if (!this.viewButtons || !this.viewPanels) {
+        console.error(
+          "View buttons or panels not found in BlogList component."
+        );
+        return;
+      }
 
-    viewButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        const viewType = button.getAttribute("data-view");
-        if (!viewType) return;
+      this.setupEventListeners();
 
-        updateButtons(viewType);
-        updateViews(viewType);
-        updateURLWithoutReload(viewType);
+      const initialView =
+        this.getURLViewType() ||
+        this.getAttribute("data-initial-view") ||
+        "wide";
+      this.switchToView(initialView);
+    }
+
+    disconnectedCallback() {
+      if (this.viewButtons) {
+        this.viewButtons.forEach((button) => {
+          button.removeEventListener(
+            "click",
+            this.handleButtonClick.bind(this)
+          );
+        });
+      }
+      window.removeEventListener("popstate", this.handlePopState.bind(this));
+    }
+
+    setupEventListeners() {
+      if (this.viewButtons) {
+        this.viewButtons.forEach((button) => {
+          button.addEventListener("click", this.handleButtonClick.bind(this));
+        });
+      }
+      window.addEventListener("popstate", this.handlePopState.bind(this));
+    }
+
+    handleButtonClick(event: Event) {
+      const button = event.currentTarget as HTMLButtonElement;
+      const viewType = button.getAttribute("data-view");
+      if (!viewType) return;
+
+      this.switchToView(viewType);
+      this.updateURLWithoutReload(viewType);
+    }
+
+    handlePopState() {
+      const newViewType = this.getURLViewType();
+      if (!newViewType) return;
+      this.switchToView(newViewType);
+    }
+
+    switchToView(viewType: string) {
+      if (!this.viewButtons || !this.viewPanels) return;
+
+      this.updateButtons(viewType);
+      this.updatePanels(viewType);
+    }
+
+    updateButtons(viewType: string) {
+      if (!this.viewButtons) return;
+
+      this.viewButtons.forEach((button) => {
+        button.classList.remove("active");
+        if (button.getAttribute("data-view") === viewType) {
+          button.classList.add("active");
+        }
       });
-    });
-  }
+    }
 
-  // Client-side code to handle view switching
-  document.addEventListener("DOMContentLoaded", initializeBlogList);
-  document.addEventListener("astro:page-load", initializeBlogList);
-  // Handle browser back/forward navigation
-  window.addEventListener("popstate", () => {
-    const newViewType = getURLViewType();
-    initializeBlogList();
-    console.log(`Navigation: switching to view: ${newViewType}`);
-  });
+    updatePanels(viewType: string) {
+      if (!this.viewPanels) return;
+
+      this.viewPanels.forEach((panel) => {
+        // panel.classList.add("hidden");
+        // if (panel.getAttribute("data-view-type") === viewType) {
+        //   panel.classList.remove("hidden");
+        // }
+        if (panel.getAttribute("data-view-type") === viewType) {
+          panel.classList.remove("hidden");
+        } else {
+          panel.classList.add("hidden");
+        }
+      });
+    }
+
+    getURLViewType(): string | null {
+      const url = new URL(window.location.href);
+      const viewParam = url.searchParams.get("view");
+      if (viewParam && ["wide", "thumbnail", "compact"].includes(viewParam)) {
+        return viewParam;
+      }
+      return null;
+    }
+
+    updateURLWithoutReload(viewType: string) {
+      // create a new url object based on the current URL
+      const url = new URL(window.location.href);
+      // set the view parameter
+      url.searchParams.set("view", viewType);
+      // update the URL without reloading the page
+      window.history.pushState({}, "", url);
+    }
+  }
+  customElements.define("blog-list", BlogList);
 </script>
+
+<!-- 
+  <script>
+    import { init } from "astro/virtual-modules/prefetch.js";
+
+    function updateButtons(viewType: string) {
+      const buttons = document.querySelectorAll(".view-btn");
+      buttons.forEach((button) => {
+        button.classList.remove("active");
+        if (button.getAttribute("data-view") === viewType)
+          button.classList.add("active");
+      });
+    }
+
+    function updateViews(viewType: string) {
+      const views = document.querySelectorAll('[id^="blog-posts-container-"]');
+      views.forEach((view) => view.classList.add("hidden"));
+      const selectedView = document.getElementById(
+        `blog-posts-container-${viewType}`
+      );
+      if (selectedView) selectedView.classList.remove("hidden");
+    }
+
+    function updateURLWithoutReload(viewType: string) {
+      // create a new url object based on the current URL
+      const url = new URL(window.location.href);
+      // set the view parameter
+      url.searchParams.set("view", viewType);
+      // update the URL without reloading the page
+      window.history.pushState({}, "", url);
+    }
+
+    function getURLViewType() {
+      const url = new URL(window.location.href);
+      const viewParam = url.searchParams.get("view");
+      return viewParam && ["wide", "thumbnail", "compact"].includes(viewParam)
+        ? viewParam
+        : "wide";
+    }
+
+    function initializeBlogList() {
+      const currentView = getURLViewType();
+      updateButtons(currentView);
+      // updateViews(currentView);
+      const initialView = document.querySelector(
+        `.view-panel[data-view-type="${currentView}"]`
+      );
+      if (initialView) {
+        // Set initial container height
+        const container = document.getElementById("view-container");
+        if (container) {
+          container.style.minHeight = `${initialView.scrollHeight + 100}px`;
+        }
+        initialView.classList.remove("hidden");
+        console.log(`Made ${currentView} view visible`);
+      } else {
+        console.error(`Initial view panel for ${currentView} not found`);
+      }
+
+      const viewButtons = document.querySelectorAll(".view-btn");
+
+      viewButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const viewType = button.getAttribute("data-view");
+          if (!viewType) return;
+
+          updateButtons(viewType);
+          updateViews(viewType);
+          updateURLWithoutReload(viewType);
+        });
+      });
+    }
+
+    // Client-side code to handle view switching
+    document.addEventListener("DOMContentLoaded", initializeBlogList);
+    document.addEventListener("astro:page-load", initializeBlogList);
+    // Handle browser back/forward navigation
+    window.addEventListener("popstate", () => {
+      const newViewType = getURLViewType();
+      initializeBlogList();
+      console.log(`Navigation: switching to view: ${newViewType}`);
+    });
+  </script> -->
