@@ -162,7 +162,7 @@ export default defineConfig({
 
   redirects: {
     "/contact": "/about/contact",
-    "/projects": "/under-construction",
+    // "/projects": "/under-construction",
   },
   prefetch: true,
 });
