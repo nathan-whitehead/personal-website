@@ -6,6 +6,7 @@
 @config "./tailwind.config.js";
 
 @theme {
+  /* Font definitions */
   --font-serif: "EB Garamond", serif;
   --font-sans: "Fira Sans", Helvetica, Arial, sans-serif;
   --font-mono: "Fira Code", "Courier New", Courier, monospace;
@@ -13,19 +14,20 @@
   --font-title: "EB Garamond", serif;
   --font-script: "Quintessential", "EB Garamond", serif;
 
+  /* Base color palettes */
   --color-primary-50: oklch(0.93 0.02 255.18);
   --color-primary-100: oklch(0.87 0.03 255.18);
   --color-primary-200: oklch(0.8 0.045 255.18);
   --color-primary-300: oklch(0.7 0.06 255.18);
   --color-primary-400: oklch(0.55 0.075 255.18);
-  --color-primary-500: oklch(0.4346 0.091 255.18); /* Your original primary */
+  --color-primary-500: oklch(0.4346 0.091 255.18);
   --color-primary-600: oklch(0.38 0.085 255.18);
   --color-primary-700: oklch(0.32 0.075 255.18);
   --color-primary-800: oklch(0.27 0.065 255.18);
   --color-primary-900: oklch(0.23 0.055 255.18);
   --color-primary-950: oklch(0.17 0.04 255.18);
 
-  /* Secondary color palette based on --color-secondary-700 */
+  /* Secondary color palette */
   --color-secondary-50: oklch(0.95 0.02 141.69);
   --color-secondary-100: oklch(0.9 0.03 141.69);
   --color-secondary-200: oklch(0.82 0.05 141.69);
@@ -33,14 +35,14 @@
   --color-secondary-400: oklch(0.55 0.105 141.69);
   --color-secondary-500: oklch(0.45 0.115 141.69);
   --color-secondary-600: oklch(0.4 0.12 141.69);
-  --color-secondary-700: oklch(0.3718 0.1242 141.69); /* Your provided value */
+  --color-secondary-700: oklch(0.3718 0.1242 141.69);
   --color-secondary-800: oklch(0.3 0.1 141.69);
   --color-secondary-900: oklch(0.25 0.08 141.69);
   --color-secondary-950: oklch(0.18 0.06 141.69);
 
-  /* For backward compatibility */
-  --color-primary: var(--color-primary-500);
+  /* --color-primary: var(--color-primary-500); */
 
+  /* paper colors */
   --color-paper-50: oklch(95% 0.015 90);
   --color-paper-100: oklch(90% 0.02 90);
   --color-paper-200: oklch(85% 0.025 90);
@@ -52,6 +54,81 @@
   --color-paper-800: oklch(55% 0.05 90);
   --color-paper-900: oklch(50% 0.05 90);
   --color-paper-950: oklch(45% 0.05 90);
+
+  /* semantic color abstractions - Soft light theme defaults */
+  /* surface colors */
+  --color-surface-1: var(--color-paper-50);
+  --color-surface-2: var(--color-paper-100);
+  --color-surface-3: var(--color-paper-200);
+  --color-surface-4: var(--color-paper-300);
+  --color-surface-5: var(--color-paper-400);
+
+  /* text colors */
+  --color-text-primary: var(--color-stone-950);
+  --color-text-secondary: var(--color-stone-800);
+  --color-text-muted: var(--color-paper-950);
+
+  --color-text-primary-1: var(--color-primary-800);
+  --color-text-primary-2: var(--color-primary-900);
+  --color-text-primary-3: var(--color-primary-950);
+
+  --color-text-secondary-1: var(--color-secondary-800);
+  --color-text-secondary-2: var(--color-secondary-900);
+  --color-text-secondary-3: var(--color-secondary-950);
+
+  /* border colors */
+  --color-border-1: var(--color-paper-300);
+  --color-border-2: var(--color-paper-400);
+  --color-border-3: var(--color-paper-500);
+  --color-border-4: var(--color-paper-600);
+  --color-border-5: var(--color-paper-700);
+
+  /* bright accent colors */
+  --color-accent-primary-1: var(--color-primary-400);
+  --color-accent-primary-2: var(--color-primary-500);
+  --color-accent-primary-3: var(--color-primary-600);
+  --color-accent-secondary-1: var(--color-secondary-400);
+  --color-accent-secondary-2: var(--color-secondary-500);
+  --color-accent-secondary-3: var(--color-secondary-600);
+}
+
+/* default dark mode */
+@theme dark {
+  /* semantic color abstractions - dark theme defaults */
+  /* surface colors */
+  --color-surface-1: var(--color-zinc-900);
+  --color-surface-2: var(--color-zinc-800);
+  --color-surface-3: var(--color-zinc-700);
+  --color-surface-4: var(--color-zinc-600);
+  --color-surface-5: var(--color-zinc-500);
+
+  /* text colors */
+  --color-text-primary: var(--color-gray-50);
+  --color-text-secondary: var(--color-gray-200);
+  --color-text-muted: var(--color-zinc-400);
+
+  --color-text-primary-1: var(--color-primary-200);
+  --color-text-primary-2: var(--color-primary-300);
+  --color-text-primary-3: var(--color-primary-400);
+
+  --color-text-secondary-1: var(--color-secondary-200);
+  --color-text-secondary-2: var(--color-secondary-300);
+  --color-text-secondary-3: var(--color-secondary-400);
+
+  /* border colors */
+  --color-border-1: var(--color-zinc-600);
+  --color-border-2: var(--color-zinc-500);
+  --color-border-3: var(--color-zinc-400);
+  --color-border-4: var(--color-zinc-300);
+  --color-border-5: var(--color-zinc-200);
+
+  /* bright accent colors */
+  --color-accent-primary-1: var(--color-primary-600);
+  --color-accent-primary-2: var(--color-primary-500);
+  --color-accent-primary-3: var(--color-primary-400);
+  --color-accent-secondary-1: var(--color-secondary-600);
+  --color-accent-secondary-2: var(--color-secondary-500);
+  --color-accent-secondary-3: var(--color-secondary-400);
 }
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
