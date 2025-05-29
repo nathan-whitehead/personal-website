@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import OptimizedImage from "../common/OptimizedImage.astro";
 
 // Define the props for the component
 interface Props {
@@ -43,10 +43,16 @@ function formatDate(date: Date | string) {
       <div class="flex flex-col md:flex-row md:items-start gap-4">
         {post.data.thumbnail && (
           <div class="post-image w-full md:w-1/4 flex-shrink-0">
-            <Image
+            {/* <Image
               src={post.data.thumbnail.src}
               alt={post.data.thumbnail.alt || post.data.title}
               class="w-full h-auto rounded-md aspect-video object-cover"
+            /> */}
+            <OptimizedImage
+              image={post.data.thumbnail.src}
+              alt={post.data.thumbnail.alt || post.data.title}
+              size="thumbnail"
+              className="w-full h-auto rounded-md aspect-video object-cover"
             />
           </div>
         )}
@@ -86,10 +92,16 @@ function formatDate(date: Date | string) {
     >
       {post.data.thumbnail ? (
         <div class="aspect-square">
-          <Image
+          {/* <Image
             src={post.data.thumbnail.src}
             alt={post.data.thumbnail.alt || post.data.title}
             class="w-full h-full object-cover"
+          /> */}
+          <OptimizedImage
+            image={post.data.thumbnail.src}
+            alt={post.data.thumbnail.alt || post.data.title}
+            size="thumbnail"
+            className="w-full h-full object-cover"
           />
         </div>
       ) : (
