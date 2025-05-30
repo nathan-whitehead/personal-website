@@ -1,13 +1,14 @@
 ---
 // frontmatter
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
 ---
 
-<mobile-menu>
-  <button
-    class="md:hidden p-2 rounded hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
-    id="mobileMenuToggle"
-    aria-label="Toggle navigation"
-  >
+<mobile-menu class={className}>
+  <button id="mobileMenuToggle" aria-label="Toggle navigation">
     <i class="bi bi-list text-xl"></i>
   </button>
 </mobile-menu>

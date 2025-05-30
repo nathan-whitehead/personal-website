@@ -46,13 +46,13 @@ const formattedDate = new Date(entry.data.date).toLocaleDateString("en-US", {
 
       {
         entry.data.tags && entry.data.tags.length > 0 && (
-          <div class="post-tags mt-8 pt-4 border-t border-paper-300 dark:border-zinc-700">
+          <div class="post-tags mt-8 pt-4 border-t border-bd-1">
             <span class="font-sans font-medium">Tags:</span>
             <div class="flex flex-wrap gap-2 mt-2">
               {entry.data.tags.map((tag: string) => (
                 <a
                   href={`/projects/tag/${tag.toLowerCase().replace(/\s+/g, "-")}/`}
-                  class="px-3 py-1 rounded-full bg-paper-200 dark:bg-zinc-800 hover:bg-paper-300 dark:hover:bg-zinc-700 transition-colors text-sm"
+                  class="px-3 py-1 rounded-full bg-sf-3 hover:bg-sf-4 transition-colors text-sm"
                 >
                   {tag}
                 </a>

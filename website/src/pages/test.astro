@@ -1,0 +1,363 @@
+---
+import BaseLayout from "@layouts/base.astro";
+---
+
+<BaseLayout
+  title="Color System Test"
+  description="Testing all semantic color variables in both light and dark themes"
+>
+  <h1 class="text-3xl font-bold mb-4">Color System Test</h1>
+  <p class="mb-6">
+    This page displays all semantic colors defined in your CSS to verify they
+    appear correctly in both light and dark themes.
+  </p>
+
+  <!-- Surface Colors -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-ln-primary-1">
+      Surface Colors
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div class="p-6 rounded bg-sf-1 border border-bd-1">
+        <p class="font-mono text-sm">surface-1</p>
+      </div>
+      <div class="p-6 rounded bg-sf-2 border border-bd-1">
+        <p class="font-mono text-sm">surface-2</p>
+      </div>
+      <div class="p-6 rounded bg-sf-3 border border-bd-1">
+        <p class="font-mono text-sm">surface-3</p>
+      </div>
+      <div class="p-6 rounded bg-sf-4 border border-bd-1">
+        <p class="font-mono text-sm">surface-4</p>
+      </div>
+      <div class="p-6 rounded bg-sf-5 border border-bd-1">
+        <p class="font-mono text-sm">surface-5</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Text Colors -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-ln-secondary-1">Text Colors</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div class="p-4 bg-sf-2 rounded">
+        <p class="text-ln-1 mb-2">text-ln-1 (normal)</p>
+        <p class="text-ln-2 mb-2">text-ln-2 (dimmed)</p>
+        <p class="text-ln-muted-1 mb-2">text-ln-muted-1</p>
+        <p class="text-ln-muted-2 mb-2">text-ln-muted-2</p>
+      </div>
+      <div class="p-4 bg-sf-2 rounded">
+        <p class="text-ln-primary-1 mb-2">text-ln-primary-1</p>
+        <p class="text-ln-primary-2 mb-2">text-ln-primary-2</p>
+        <p class="text-ln-secondary-1 mb-2">text-ln-secondary-1</p>
+        <p class="text-ln-secondary-2 mb-2">text-ln-secondary-2</p>
+      </div>
+      <div class="p-4 bg-sf-4 rounded">
+        <p class="text-ln-light-1 mb-2">text-ln-light-1</p>
+        <p class="text-ln-light-2 mb-2">text-ln-light-2</p>
+        <p class="text-ln-dark-1 mb-2">text-ln-dark-1</p>
+        <p class="text-ln-dark-2 mb-2">text-ln-dark-2</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="p-4 bg-sf-2 rounded">
+        <p class="text-ln-danger-1 mb-2">text-ln-danger-1</p>
+        <p class="text-ln-danger-2 mb-2">text-ln-danger-2</p>
+      </div>
+      <div class="p-4 bg-sf-2 rounded">
+        <p class="text-ln-warning-1 mb-2">text-ln-warning-1</p>
+        <p class="text-ln-warning-2 mb-2">text-ln-warning-2</p>
+      </div>
+      <div class="p-4 bg-sf-2 rounded">
+        <p class="text-ln-info-1 mb-2">text-ln-info-1</p>
+        <p class="text-ln-info-2 mb-2">text-ln-info-2</p>
+      </div>
+      <div class="p-4 bg-sf-2 rounded">
+        <p class="text-ln-success-1 mb-2">text-ln-success-1</p>
+        <p class="text-ln-success-2 mb-2">text-ln-success-2</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Border Colors -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-ln-primary-2">Border Colors</h2>
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <div class="p-6 rounded bg-sf-1 border-4 border-bd-1">
+        <p class="font-mono text-sm">border-1</p>
+      </div>
+      <div class="p-6 rounded bg-sf-1 border-4 border-bd-2">
+        <p class="font-mono text-sm">border-2</p>
+      </div>
+      <div class="p-6 rounded bg-sf-1 border-4 border-bd-3">
+        <p class="font-mono text-sm">border-3</p>
+      </div>
+      <div class="p-6 rounded bg-sf-1 border-4 border-bd-4">
+        <p class="font-mono text-sm">border-4</p>
+      </div>
+      <div class="p-6 rounded bg-sf-1 border-4 border-bd-5">
+        <p class="font-mono text-sm">border-5</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Icon Colors -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-ln-secondary-2">Icon Colors</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+        <h3 class="font-semibold mb-2">Primary & Secondary Icons</h3>
+        <div class="flex gap-4">
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-primary-1">★</div>
+            <p class="font-mono text-xs mt-2">icn-primary-1</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-primary-2">★</div>
+            <p class="font-mono text-xs mt-2">icn-primary-2</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-secondary-1">★</div>
+            <p class="font-mono text-xs mt-2">icn-secondary-1</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-secondary-2">★</div>
+            <p class="font-mono text-xs mt-2">icn-secondary-2</p>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <h3 class="font-semibold mb-2">Functional Icons</h3>
+        <div class="grid grid-cols-4 gap-2">
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-danger-1">⚠</div>
+            <p class="font-mono text-xs mt-2">icn-danger-1</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-warning-1">⚠</div>
+            <p class="font-mono text-xs mt-2">icn-warning-1</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-info-1">ℹ</div>
+            <p class="font-mono text-xs mt-2">icn-info-1</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-success-1">✓</div>
+            <p class="font-mono text-xs mt-2">icn-success-1</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-danger-2">⚠</div>
+            <p class="font-mono text-xs mt-2">icn-danger-2</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-warning-2">⚠</div>
+            <p class="font-mono text-xs mt-2">icn-warning-2</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-info-2">ℹ</div>
+            <p class="font-mono text-xs mt-2">icn-info-2</p>
+          </div>
+          <div class="p-4 bg-sf-2 rounded text-center">
+            <div class="text-4xl text-icn-success-2">✓</div>
+            <p class="font-mono text-xs mt-2">icn-success-2</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accent Colors -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-ln-secondary-2">
+      Accent Colors
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="space-y-4">
+        <h3 class="font-semibold mb-2">Primary Accents</h3>
+        <div class="p-6 rounded bg-primary-500 text-white">
+          <p class="font-mono text-sm">primary-500</p>
+        </div>
+        <div class="p-6 rounded bg-primary-600 text-white">
+          <p class="font-mono text-sm">primary-600</p>
+        </div>
+        <div class="p-6 rounded bg-primary-700 text-white">
+          <p class="font-mono text-sm">primary-700</p>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <h3 class="font-semibold mb-2">Secondary Accents</h3>
+        <div class="p-6 rounded bg-secondary-500 text-white">
+          <p class="font-mono text-sm">secondary-500</p>
+        </div>
+        <div class="p-6 rounded bg-secondary-600 text-white">
+          <p class="font-mono text-sm">secondary-600</p>
+        </div>
+        <div class="p-6 rounded bg-secondary-700 text-white">
+          <p class="font-mono text-sm">secondary-700</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Usage Examples -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-ln-primary-1">
+      Practical Examples
+    </h2>
+
+    <!-- Cards -->
+    <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-3 text-ln-secondary-1">Cards</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-sf-1 p-6 rounded-lg border border-bd-1 shadow-sm">
+          <h4 class="text-lg font-medium text-ln-primary-1 mb-2">Basic Card</h4>
+          <p class="text-ln-1 mb-4">This card uses sf-1, ln-1, and bd-1.</p>
+          <button
+            class="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+          >
+            Button
+          </button>
+        </div>
+
+        <div class="bg-sf-2 p-6 rounded-lg border border-bd-3 shadow-sm">
+          <h4 class="text-lg font-medium text-ln-primary-2 mb-2">
+            Alternate Card
+          </h4>
+          <p class="text-ln-2 mb-4">This card uses sf-2, ln-2, and bd-3.</p>
+          <button
+            class="bg-secondary-600 text-white px-4 py-2 rounded hover:bg-secondary-700"
+          >
+            Button
+          </button>
+        </div>
+
+        <div class="bg-sf-3 p-6 rounded-lg border border-bd-2 shadow-sm">
+          <h4 class="text-lg font-medium text-ln-secondary-2 mb-2">
+            Highlighted Card
+          </h4>
+          <p class="text-ln-muted-1 mb-4">
+            This card uses sf-3, ln-muted-1, and bd-2.
+          </p>
+          <button
+            class="bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-600"
+          >
+            Button
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Examples -->
+    <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-3 text-ln-secondary-2">Alerts</h3>
+      <div class="space-y-4">
+        <div class="bg-sf-2 border-l-4 border-primary-600 p-4">
+          <p class="text-ln-primary-1 font-medium">Primary Alert</p>
+          <p class="text-ln-2">
+            This alert uses sf-2, border-primary-600, and text variables.
+          </p>
+        </div>
+        <div class="bg-sf-2 border-l-4 border-secondary-600 p-4">
+          <p class="text-ln-secondary-1 font-medium">Secondary Alert</p>
+          <p class="text-ln-2">
+            This alert uses sf-2, border-secondary-600, and text variables.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Example -->
+    <div>
+      <h3 class="text-xl font-semibold mb-3 text-ln-secondary-2">Navigation</h3>
+      <nav class="bg-sf-3 p-4 rounded-lg">
+        <ul class="flex flex-wrap gap-4">
+          <li>
+            <a
+              href="#"
+              class="text-ln-primary-2 hover:text-ln-primary-1 px-3 py-2 rounded hover:bg-sf-4"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-ln-primary-2 hover:text-ln-primary-1 px-3 py-2 rounded hover:bg-sf-4"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-ln-primary-2 hover:text-ln-primary-1 px-3 py-2 rounded bg-sf-4"
+              >Services</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-ln-primary-2 hover:text-ln-primary-1 px-3 py-2 rounded hover:bg-sf-4"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Theme Switcher -->
+  <div
+    class="fixed bottom-4 right-4 bg-sf-2 p-3 rounded-full shadow-lg border border-bd-2"
+  >
+    <button
+      id="theme-toggle"
+      class="w-10 h-10 flex items-center justify-center"
+    >
+      <span id="theme-icon" class="text-ln-primary-1 text-xl">🌓</span>
+    </button>
+  </div>
+</BaseLayout>
+
+<script>
+  // Simple theme toggle script
+  const themeToggle = document.getElementById("theme-toggle");
+  const htmlElement = document.documentElement;
+
+  themeToggle?.addEventListener("click", () => {
+    const currentTheme = htmlElement.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    htmlElement.setAttribute("data-theme", newTheme);
+
+    // Update icon
+    const themeIcon = document.getElementById("theme-icon");
+    if (themeIcon) {
+      themeIcon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+    }
+
+    // Store preference
+    localStorage.setItem("theme-preference", newTheme);
+  });
+
+  // Initialize theme based on saved preference or system preference
+  document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("theme-preference");
+    const themeIcon = document.getElementById("theme-icon");
+
+    if (savedTheme) {
+      htmlElement.setAttribute("data-theme", savedTheme);
+      if (themeIcon) {
+        themeIcon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+      }
+    } else {
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      htmlElement.setAttribute(
+        "data-theme",
+        systemPrefersDark ? "dark" : "light"
+      );
+      if (themeIcon) {
+        themeIcon.textContent = systemPrefersDark ? "☀️" : "🌙";
+      }
+    }
+  });
+</script>
