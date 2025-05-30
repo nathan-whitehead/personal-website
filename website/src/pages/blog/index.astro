@@ -1,9 +1,13 @@
 ---
 import BaseLayout from "@layouts/base.astro";
 import { getCollection } from "astro:content";
+import SearchBar from "@components/common/SearchBar.astro";
+import BlogList from "@components/blog/BlogList.astro";
+import LinkButton from "@/components/common/LinkButton.astro";
 
 // Get all blog posts
 const allPosts = await getCollection("blog");
+const indexPath = "search-index.json";
 
 // Sort posts by date in descending order
 const sortedPosts = allPosts.sort(
@@ -45,24 +49,9 @@ function formatDate(dateString: Date | string) {
         programming, and other topics that interest me.
       </p>
 
-      <div class="blog-search font-sans mb-8">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search blog posts..."
-          aria-label="Search blog posts"
-          class="w-full p-2 border rounded bg-stone-50 dark:bg-zinc-700 dark:border-zinc-700"
-        />
-        <div
-          id="searchResults"
-          class="search-results hidden mt-2 bg-paper-100 dark:bg-zinc-800 border border-paper-300 dark:border-zinc-700 rounded shadow-md p-2"
-        >
-        </div>
-      </div>
+      <SearchBar indexPath={indexPath} />
 
-      <h2
-        class="text-2xl font-sans mb-4 border-b border-paper-300 dark:border-zinc-700 pb-2"
-      >
+      <h2 class="text-2xl font-sans mb-4 border-b border-bd-1 pb-2">
         Categories
       </h2>
       <ul class="categories-list mb-8 space-y-1">
@@ -71,11 +60,11 @@ function formatDate(dateString: Date | string) {
             <li class="flex justify-between">
               <a
                 href={`/blog/category/${category.slug}/`}
-                class="hover:text-primary"
+                class="hover:text-ln-primary-1 transition-colors"
               >
                 {category.name}
               </a>
-              <span class="post-count text-paper-700 dark:text-stone-400">
+              <span class="post-count text-ln-muted-1">
                 ({category.posts.length} posts)
               </span>
             </li>
@@ -83,220 +72,17 @@ function formatDate(dateString: Date | string) {
         }
       </ul>
 
-      <h2
-        class="text-2xl font-sans mb-4 border-b border-paper-300 dark:border-zinc-700 pb-2"
-      >
+      <h2 class="text-2xl font-sans mb-4 border-b border-bd-1 pb-2">
         Recent Posts
       </h2>
-      <ul class="posts-list space-y-3">
-        {
-          recentPosts.map((post) => (
-            <li class="flex flex-col sm:flex-row sm:justify-between pb-2 border-b border-paper-200 dark:border-zinc-800">
-              <a
-                href={`/blog/${post.slug}/`}
-                class="hover:text-primary font-medium"
-              >
-                {post.data.title}
-              </a>
-              <span class="post-date text-paper-700 dark:text-stone-400 text-sm">
-                {formatDate(post.data.date)}
-              </span>
-            </li>
-          ))
-        }
-      </ul>
+
+      <BlogList posts={recentPosts} viewType="compact" />
 
       <div class="mt-8 text-center">
-        <a
-          href="/blog/all/"
-          class="inline-block px-4 py-2 bg-primary text-white font-medium rounded hover:bg-primary-600 transition-colors"
-        >
+        <LinkButton href="/blog/archive/" class="ml-4">
           View All Posts
-        </a>
+        </LinkButton>
       </div>
     </div>
   </div>
 </BaseLayout>
-
-<script>
-  interface SearchItem {
-    title: string;
-    content: string;
-    category: string;
-    url: string;
-    date: string;
-  }
-
-  let searchIndex: SearchItem[] = [];
-
-  // load the search index from the API
-  function loadSearchIndex() {
-    fetch("/blog/search-index.json")
-      .then((response) => response.json())
-      .then((data) => {
-        searchIndex = data;
-      })
-      .catch((error) => console.error("Error loading search index:", error));
-  }
-  // handle clicks outside the search results to close them
-  function handleClickOutside(event: MouseEvent) {
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-    if (
-      searchInput &&
-      searchResults &&
-      !searchInput.contains(event.target as Node) &&
-      !searchResults.contains(event.target as Node)
-    ) {
-      searchResults.classList.add("hidden");
-    }
-  }
-  // handle search input changes
-  function handleSearchInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const query = target.value.toLowerCase().trim();
-    const searchResults = document.getElementById("searchResults");
-    if (!query || !searchResults) {
-      // searchResults.innerHTML = "";
-      // searchResults.classList.add("hidden");
-      return;
-    }
-    // Filter posts that match the query
-    const results = searchIndex
-      .filter((post) => {
-        return (
-          post.title.toLowerCase().includes(query) ||
-          post.content.toLowerCase().includes(query) ||
-          post.category.toLowerCase().includes(query)
-        );
-      })
-      .slice(0, 5); // Limit to 5 results
-
-    // Display results
-    if (results.length > 0) {
-      searchResults.innerHTML =
-        '<ul class="space-y-2">' +
-        results
-          .map(
-            (post) => `
-            <li class="pb-2 border-b border-paper-200 dark:border-zinc-700 last:border-b-0">
-              <a href="${post.url}" class="hover:text-primary block font-medium">${post.title}</a>
-              <span class="post-date text-paper-700 dark:text-paper-400 text-sm">${post.date}</span>
-            </li>
-          `
-          )
-          .join("") +
-        "</ul>";
-      searchResults.classList.remove("hidden");
-    } else {
-      searchResults.innerHTML =
-        '<p class="text-center text-paper-700 dark:text-paper-400">No results found</p>';
-      searchResults.classList.remove("hidden");
-    }
-  }
-  // clean function to remove listeners before page changes
-  function cleanupSearch() {
-    const searchInput = document.getElementById("searchInput");
-    if (searchInput) {
-      searchInput.removeEventListener("input", handleSearchInput);
-    }
-    document.removeEventListener("click", handleClickOutside);
-  }
-  // initialize search functionality on page load/transition
-  function initializeSearch() {
-    const searchInput = document.getElementById("searchInput");
-    const searchResults = document.getElementById("searchResults");
-
-    if (!searchInput || !searchResults) return;
-
-    searchInput.addEventListener("input", handleSearchInput);
-    document.addEventListener("click", handleClickOutside);
-
-    loadSearchIndex();
-  }
-
-  document.addEventListener("astro:page-load", initializeSearch);
-  document.addEventListener("astro:before-swap", cleanupSearch);
-  document.addEventListener("astro:page-load", initializeSearch);
-
-  // document.addEventListener("DOMContentLoaded", function () {
-  //   const searchInput = document.getElementById("searchInput");
-  //   const searchResults = document.getElementById("searchResults");
-
-  //   interface SearchItem {
-  //     title: string;
-  //     content: string;
-  //     category: string;
-  //     url: string;
-  //     date: string;
-  //   }
-
-  //   let searchIndex: SearchItem[] = [];
-
-  //   // Fetch the search index
-  //   fetch("/api/blog/search-index.json")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       searchIndex = data;
-  //     })
-  //     .catch((error) => console.error("Error loading search index:", error));
-
-  //   // Handle search input
-  //   searchInput?.addEventListener("input", function (this: HTMLInputElement) {
-  //     const query = this.value.toLowerCase().trim();
-
-  //     // Clear results if query is empty
-  //     if (!query || !searchResults) {
-  //       if (searchResults) {
-  //         searchResults.innerHTML = "";
-  //         searchResults.classList.add("hidden");
-  //       }
-  //       return;
-  //     }
-
-  //     // Filter posts that match the query
-  //     const results = searchIndex
-  //       .filter((post) => {
-  //         return (
-  //           post.title.toLowerCase().includes(query) ||
-  //           post.content.toLowerCase().includes(query) ||
-  //           post.category.toLowerCase().includes(query)
-  //         );
-  //       })
-  //       .slice(0, 5); // Limit to 5 results
-
-  //     // Display results
-  //     if (results.length > 0) {
-  //       searchResults.innerHTML =
-  //         '<ul class="space-y-2">' +
-  //         results
-  //           .map(
-  //             (post) => `
-  //           <li class="pb-2 border-b border-paper-200 dark:border-zinc-700 last:border-b-0">
-  //             <a href="${post.url}" class="hover:text-primary block font-medium">${post.title}</a>
-  //             <span class="post-date text-paper-700 dark:text-paper-400 text-sm">${post.date}</span>
-  //           </li>
-  //         `
-  //           )
-  //           .join("") +
-  //         "</ul>";
-  //       searchResults.classList.remove("hidden");
-  //     } else {
-  //       searchResults.innerHTML =
-  //         '<p class="text-center text-paper-700 dark:text-paper-400">No results found</p>';
-  //       searchResults.classList.remove("hidden");
-  //     }
-  //   });
-
-  //   // Close search results when clicking outside
-  //   document.addEventListener("click", function (e) {
-  //     if (
-  //       e.target !== searchInput &&
-  //       e.target !== searchResults &&
-  //       searchResults
-  //     ) {
-  //       searchResults.classList.add("hidden");
-  //     }
-  //   });
-  // });
-</script>

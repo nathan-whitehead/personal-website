@@ -4,20 +4,21 @@ import DetailsList from "@components/resume/DetailsList.astro";
 import CollapsibleSection from "@components/resume/CollapsibleSection.astro";
 import resume from "@data/resume.json";
 import { getLink, getShortLink } from "@utils/links.js";
+import SectionGroup from "@components/resume/SectionGroup.astro";
+import ToggleSections from "@components/resume/ToggleSections.astro";
+import StickyNav from "@components/resume/StickyNav.astro";
 
 const navLinkClasses = [
   "whitespace-nowrap",
-  "hover:text-primary",
+  "hover:text-ln-primary-1",
   "hover:border-b-1",
   "transition-all",
   "duration-200",
   "font-sans",
   "font-light",
-  // "transform",
-  // "hover:scale-105",
 ];
 const contactLinkClasses = [
-  "hover:text-primary-500",
+  "hover:text-ln-primary-1",
   "transition-colors",
   "duration-200",
 ];
@@ -29,181 +30,172 @@ const contactLinkClasses = [
 >
   <div class="resume-container max-w-4xl mx-auto px-4">
     <header class="resume-header text-center mb-4">
-      <h1 class="text-4xl font-serif text-primary-500">{resume.name}</h1>
+      <h1 class="text-4xl font-serif text-ln-primary-1">{resume.name}</h1>
     </header>
 
-    <nav
-      id="resume-nav"
-      class:list={[
-        "flex",
-        "justify-between",
-        "items-center",
-        "bg-paper-50",
-        "dark:bg-zinc-900",
-        "p-2",
-        // "rounded",
-        "mb-4",
-        "sticky",
-        "top-0",
-        // "shadow-md",
-        // "w-full",
-        "z-9",
-      ]}
-    >
-      <div class="nav-sections flex gap-4 overflow-x-auto sm:grid-cols-2">
-        <a href="#education" class:list={navLinkClasses}>Education</a>
-        <a href="#experience" class:list={navLinkClasses}>Experience</a>
-        <a href="#skills" class:list={navLinkClasses}>Skills</a>
-        <a href="#projects" class:list={navLinkClasses}>Projects</a>
-        <a href="#achievements" class:list={navLinkClasses}>Achievements</a>
-      </div>
-      <button
-        id="toggleAllSections"
-        class="p-1 rounded hover:bg-paper-200 dark:hover:bg-zinc-700 border-1 inline-flex items-center"
+    <SectionGroup id="resume-sections">
+      <StickyNav
+        id="resume-nav"
+        class:list={[
+          "flex",
+          "justify-between",
+          "items-center",
+          "bg-sf-1",
+          "p-2",
+          "mb-4",
+          "sticky",
+          "top-0",
+          "z-9",
+          "border-b-1",
+          "border-bd-1",
+        ]}
       >
-        <span class="material-symbols-outlined">unfold_less</span>
-      </button>
-    </nav>
-
-    <section
-      class="contact-info bg-paper-100 dark:bg-zinc-800 rounded p-4 mb-6 border-1 border-paper-200 dark:border-zinc-700"
-    >
-      <h2 class="font-sans text-2xl mb-2">Contact</h2>
-      <div class="contact-grid sm:grid sm:grid-cols-2 font-serif font-light">
-        <div>
-          <a
-            class:list={contactLinkClasses}
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resume.contact.address.line1)},${encodeURIComponent(resume.contact.address.line2)}`}
-          >
-            {resume.contact.address.line1}<br />
-            {resume.contact.address.line2}
-          </a><br />
-          <a
-            class:list={contactLinkClasses}
-            href={`tel:+${resume.contact.phone}`}>{resume.contact.phone}</a
-          >
+        <div class="nav-sections flex gap-4 overflow-x-auto sm:grid-cols-2">
+          <a href="#education" class:list={navLinkClasses}>Education</a>
+          <a href="#experience" class:list={navLinkClasses}>Experience</a>
+          <a href="#projects" class:list={navLinkClasses}>Projects</a>
+          <a href="#skills" class:list={navLinkClasses}>Skills</a>
+          <a href="#achievements" class:list={navLinkClasses}>Achievements</a>
         </div>
-        <div class="sm:text-right mt-2 sm:mt-0">
-          <a
-            class:list={contactLinkClasses}
-            href={`mailto:${resume.contact.email}`}>{resume.contact.email}</a
-          ><br />
-          <a
-            class:list={contactLinkClasses}
-            href={getLink(resume.contact.links, "LinkedIn")}
-            >{getShortLink(resume.contact.links, "LinkedIn")}</a
-          ><br />
-          <a
-            class:list={contactLinkClasses}
-            href={getLink(resume.contact.links, "GitHub")}
-            >{getShortLink(resume.contact.links, "GitHub")}</a
-          ><br />
+        <ToggleSections initialState="expanded" />
+      </StickyNav>
+
+      <section
+        class="contact-info bg-sf-2 rounded p-4 mb-6 border-1 border-bd-1"
+      >
+        <h2 class="font-sans text-2xl mb-2">Contact</h2>
+        <div class="contact-grid sm:grid sm:grid-cols-2 font-serif font-light">
+          <div>
+            <a
+              class:list={contactLinkClasses}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resume.contact.address.line1)},${encodeURIComponent(resume.contact.address.line2)}`}
+            >
+              {resume.contact.address.line1}<br />
+              {resume.contact.address.line2}
+            </a><br />
+            <a
+              class:list={contactLinkClasses}
+              href={`tel:+${resume.contact.phone}`}>{resume.contact.phone}</a
+            >
+          </div>
+          <div class="sm:text-right mt-2 sm:mt-0">
+            <a
+              class:list={contactLinkClasses}
+              href={`mailto:${resume.contact.email}`}>{resume.contact.email}</a
+            ><br />
+            <a
+              class:list={contactLinkClasses}
+              href={getLink(resume.contact.links, "LinkedIn")}
+              >{getShortLink(resume.contact.links, "LinkedIn")}</a
+            ><br />
+            <a
+              class:list={contactLinkClasses}
+              href={getLink(resume.contact.links, "GitHub")}
+              >{getShortLink(resume.contact.links, "GitHub")}</a
+            ><br />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <CollapsibleSection id="education" title="Education" icon="school">
-      {
-        resume.education.map((edu) => (
-          <div class="resume-item mb-4 last:mb-0">
-            <div class="header-row flex justify-between flex-wrap">
-              <h3 class="text-xl font-bold">{edu.degree}</h3>
-              <span class="date">{edu.date}</span>
-            </div>
-            <div class="subheader-row flex justify-between flex-wrap text-paper-700 dark:text-zinc-300">
-              <span class="organization">{edu.institution}</span>
-              {edu.GPA && <span class="gpa">GPA: {edu.GPA}</span>}
-            </div>
-            <ul class="mt-2 list-disc pl-6">
-              {edu.details.map((detail) => (
-                <li>{detail}</li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
-    </CollapsibleSection>
-
-    <CollapsibleSection id="experience" title="Experience" icon="work">
-      {
-        resume.experience.map((job) => (
-          <div class="resume-item mb-4 last:mb-0">
-            <div class="header-row flex justify-between flex-wrap">
-              <h3 class="text-xl font-bold">{job.title}</h3>
-              <span class="date">{job.dates}</span>
-            </div>
-            <div class="subheader-row flex justify-between flex-wrap text-paper-700 dark:text-zinc-300">
-              <span class="organization">{job.organization}</span>
-            </div>
-            <div class="job-description mt-2">
-              {job.details && <DetailsList details={job.details} />}
-            </div>
-          </div>
-        ))
-      }
-    </CollapsibleSection>
-
-    <CollapsibleSection id="projects" title="Projects" icon="code">
-      {
-        resume.projects.map((project) => (
-          <div class="resume-item mb-4 last:mb-0">
-            <div class="header-row flex justify-between flex-wrap">
-              <h3 class="text-xl font-bold">{project.title}</h3>
-              <span class="date">{project.dates}</span>
-            </div>
-            <div class="project-description mt-2">
-              {project.description && (
-                <DetailsList details={project.description} />
-              )}
-            </div>
-          </div>
-        ))
-      }
-    </CollapsibleSection>
-
-    <CollapsibleSection id="skills" title="Skills" icon="psychology">
-      <div class="skills-grid grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <CollapsibleSection id="education" title="Education" icon="school">
         {
-          resume.skills.map((skillGroup) => (
-            <div class="skill-group">
-              <h3 class="text-xl mb-2">{skillGroup.category}</h3>
-              <ul class="list-disc pl-6">
-                {skillGroup.items.map((item) => (
-                  <li>{item}</li>
+          resume.education.map((edu) => (
+            <div class="resume-item mb-4 last:mb-0">
+              <div class="header-row flex justify-between flex-wrap">
+                <h3 class="text-xl font-bold">{edu.degree}</h3>
+                <span class="date">{edu.date}</span>
+              </div>
+              <div class="subheader-row flex justify-between flex-wrap text-ln-muted-1">
+                <span class="organization">{edu.institution}</span>
+                {edu.GPA && <span class="gpa">GPA: {edu.GPA}</span>}
+              </div>
+              <ul class="mt-2 list-disc pl-6">
+                {edu.details.map((detail) => (
+                  <li>{detail}</li>
                 ))}
               </ul>
             </div>
           ))
         }
-      </div>
-    </CollapsibleSection>
+      </CollapsibleSection>
 
-    <CollapsibleSection
-      id="achievements"
-      title="Achievements"
-      icon="emoji_events"
-    >
-      <ul class="achievement-list space-y-4">
+      <CollapsibleSection id="experience" title="Experience" icon="work">
         {
-          resume.achievements.map((achievement) => (
-            <li>
-              <div class="achievement-row flex justify-between flex-wrap">
-                <span class="achievement-title font-medium">
-                  {achievement.title}
-                </span>
-                <span class="date">{achievement.date}</span>
+          resume.experience.map((job) => (
+            <div class="resume-item mb-4 last:mb-0">
+              <div class="header-row flex justify-between flex-wrap">
+                <h3 class="text-xl font-bold">{job.title}</h3>
+                <span class="date">{job.dates}</span>
               </div>
-              <div class="achievement-description">
-                {achievement.description}
+              <div class="subheader-row flex justify-between flex-wrap text-ln-muted-1">
+                <span class="organization">{job.organization}</span>
               </div>
-            </li>
+              <div class="job-description mt-2">
+                {job.details && <DetailsList details={job.details} />}
+              </div>
+            </div>
           ))
         }
-      </ul>
-    </CollapsibleSection>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="projects" title="Projects" icon="code">
+        {
+          resume.projects.map((project) => (
+            <div class="resume-item mb-4 last:mb-0">
+              <div class="header-row flex justify-between flex-wrap">
+                <h3 class="text-xl font-bold">{project.title}</h3>
+                <span class="date">{project.dates}</span>
+              </div>
+              <div class="project-description mt-2">
+                {project.description && (
+                  <DetailsList details={project.description} />
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </CollapsibleSection>
+
+      <CollapsibleSection id="skills" title="Skills" icon="psychology">
+        <div class="skills-grid grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {
+            resume.skills.map((skillGroup) => (
+              <div class="skill-group">
+                <h3 class="text-xl mb-2">{skillGroup.category}</h3>
+                <ul class="list-disc pl-6">
+                  {skillGroup.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection
+        id="achievements"
+        title="Achievements"
+        icon="emoji_events"
+      >
+        <ul class="achievement-list space-y-4">
+          {
+            resume.achievements.map((achievement) => (
+              <li>
+                <div class="achievement-row flex justify-between flex-wrap">
+                  <span class="achievement-title font-medium">
+                    {achievement.title}
+                  </span>
+                  <span class="date">{achievement.date}</span>
+                </div>
+                <div class="achievement-description">
+                  {achievement.description}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </CollapsibleSection>
+    </SectionGroup>
   </div>
 </BaseLayout>
-
-<script>
-  import "@scripts/about/resume.ts";
-</script>

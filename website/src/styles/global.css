@@ -6,6 +6,7 @@
 @config "./tailwind.config.js";
 
 @theme {
+  /* Font definitions */
   --font-serif: "EB Garamond", serif;
   --font-sans: "Fira Sans", Helvetica, Arial, sans-serif;
   --font-mono: "Fira Code", "Courier New", Courier, monospace;
@@ -13,19 +14,20 @@
   --font-title: "EB Garamond", serif;
   --font-script: "Quintessential", "EB Garamond", serif;
 
+  /* Base color palettes */
   --color-primary-50: oklch(0.93 0.02 255.18);
   --color-primary-100: oklch(0.87 0.03 255.18);
   --color-primary-200: oklch(0.8 0.045 255.18);
   --color-primary-300: oklch(0.7 0.06 255.18);
   --color-primary-400: oklch(0.55 0.075 255.18);
-  --color-primary-500: oklch(0.4346 0.091 255.18); /* Your original primary */
+  --color-primary-500: oklch(0.4346 0.091 255.18);
   --color-primary-600: oklch(0.38 0.085 255.18);
   --color-primary-700: oklch(0.32 0.075 255.18);
   --color-primary-800: oklch(0.27 0.065 255.18);
   --color-primary-900: oklch(0.23 0.055 255.18);
   --color-primary-950: oklch(0.17 0.04 255.18);
 
-  /* Secondary color palette based on --color-secondary-700 */
+  /* Secondary color palette */
   --color-secondary-50: oklch(0.95 0.02 141.69);
   --color-secondary-100: oklch(0.9 0.03 141.69);
   --color-secondary-200: oklch(0.82 0.05 141.69);
@@ -33,14 +35,14 @@
   --color-secondary-400: oklch(0.55 0.105 141.69);
   --color-secondary-500: oklch(0.45 0.115 141.69);
   --color-secondary-600: oklch(0.4 0.12 141.69);
-  --color-secondary-700: oklch(0.3718 0.1242 141.69); /* Your provided value */
+  --color-secondary-700: oklch(0.3718 0.1242 141.69);
   --color-secondary-800: oklch(0.3 0.1 141.69);
   --color-secondary-900: oklch(0.25 0.08 141.69);
   --color-secondary-950: oklch(0.18 0.06 141.69);
 
-  /* For backward compatibility */
-  --color-primary: var(--color-primary-500);
+  /* --color-primary: var(--color-primary-500); */
 
+  /* paper colors */
   --color-paper-50: oklch(95% 0.015 90);
   --color-paper-100: oklch(90% 0.02 90);
   --color-paper-200: oklch(85% 0.025 90);
@@ -52,9 +54,130 @@
   --color-paper-800: oklch(55% 0.05 90);
   --color-paper-900: oklch(50% 0.05 90);
   --color-paper-950: oklch(45% 0.05 90);
+
+  /* semantic color abstractions - Soft light theme defaults */
+  /* Intention is to stack elevations, so a hover on a sf-1 would be sf-2 */
+  /* surface colors, elevations 1-5 */
+  --color-sf-1: var(--color-paper-50);
+  --color-sf-2: var(--color-paper-100);
+  --color-sf-3: var(--color-paper-200);
+  --color-sf-4: var(--color-paper-300);
+  --color-sf-5: var(--color-paper-400);
+
+  /* line/text colors normal elevations 1-3 */
+  --color-ln-1: var(--color-stone-950);
+  --color-ln-2: var(--color-stone-700);
+  /* muted is intended to be much more similar to the sf colors */
+  --color-ln-muted-1: var(--color-paper-950);
+  --color-ln-muted-2: var(--color-paper-900);
+  /* light colors are intended to use on icons or dark surfaces */
+  --color-ln-light-1: var(--color-stone-50);
+  --color-ln-light-2: var(--color-stone-200);
+  --color-ln-dark-1: var(--color-stone-950);
+  --color-ln-dark-2: var(--color-stone-700);
+  /* line colors primary and secondary */
+  --color-ln-primary-1: var(--color-primary-600);
+  --color-ln-primary-2: var(--color-primary-500);
+  --color-ln-secondary-1: var(--color-secondary-600);
+  --color-ln-secondary-2: var(--color-secondary-500);
+  /* line colors in functional colors */
+  --color-ln-danger-1: var(--color-red-600);
+  --color-ln-danger-2: var(--color-red-500);
+  --color-ln-warning-1: var(--color-yellow-600);
+  --color-ln-warning-2: var(--color-yellow-500);
+  --color-ln-info-1: var(--color-blue-600);
+  --color-ln-info-2: var(--color-blue-500);
+  --color-ln-success-1: var(--color-green-600);
+  --color-ln-success-2: var(--color-green-500);
+
+  /* border colors */
+  --color-bd-1: var(--color-paper-300);
+  --color-bd-2: var(--color-paper-400);
+  --color-bd-3: var(--color-paper-500);
+  --color-bd-4: var(--color-paper-600);
+  --color-bd-5: var(--color-paper-700);
+
+  /* Icon colors */
+  --color-icn-primary-1: var(--color-primary-600);
+  --color-icn-primary-2: var(--color-primary-500);
+  --color-icn-secondary-1: var(--color-secondary-600);
+  --color-icn-secondary-2: var(--color-secondary-500);
+  /* Icon colors in functional colors */
+  --color-icn-danger-1: var(--color-red-600);
+  --color-icn-danger-2: var(--color-red-500);
+  --color-icn-warning-1: var(--color-yellow-600);
+  --color-icn-warning-2: var(--color-yellow-500);
+  --color-icn-info-1: var(--color-blue-600);
+  --color-icn-info-2: var(--color-blue-500);
+  --color-icn-success-1: var(--color-green-600);
+  --color-icn-success-2: var(--color-green-500);
 }
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@layer dark {
+  .dark {
+    /* semantic color abstractions - dark theme */
+    /* Intention is to stack elevations, so a hover on a sf-1 would be sf-2 */
+    /* surface colors, elevations 1-5 */
+    --color-sf-1: var(--color-zinc-900);
+    --color-sf-2: var(--color-zinc-800);
+    --color-sf-3: var(--color-zinc-700);
+    --color-sf-4: var(--color-zinc-600);
+    --color-sf-5: var(--color-zinc-500);
+
+    /* line/text colors normal elevations 1-3 */
+    --color-ln-1: var(--color-gray-50);
+    --color-ln-2: var(--color-gray-200);
+    /* muted is intended to be much more similar to the sf colors */
+    --color-ln-muted-1: var(--color-zinc-400);
+    --color-ln-muted-2: var(--color-zinc-300);
+    /* light colors are intended to use on icons or dark surfaces */
+    --color-ln-light-1: var(--color-gray-50);
+    --color-ln-light-2: var(--color-gray-200);
+    --color-ln-dark-1: var(--color-zinc-900);
+    --color-ln-dark-2: var(--color-zinc-800);
+    /* line colors primary and secondary */
+    --color-ln-primary-1: var(--color-primary-300);
+    --color-ln-primary-2: var(--color-primary-200);
+    --color-ln-secondary-1: var(--color-secondary-300);
+    --color-ln-secondary-2: var(--color-secondary-200);
+    /* line colors in functional colors */
+    --color-ln-danger-1: var(--color-red-300);
+    --color-ln-danger-2: var(--color-red-200);
+    --color-ln-warning-1: var(--color-yellow-300);
+    --color-ln-warning-2: var(--color-yellow-200);
+    --color-ln-info-1: var(--color-blue-300);
+    --color-ln-info-2: var(--color-blue-200);
+    --color-ln-success-1: var(--color-green-300);
+    --color-ln-success-2: var(--color-green-200);
+
+    /* border colors */
+    --color-bd-1: var(--color-zinc-600);
+    --color-bd-2: var(--color-zinc-500);
+    --color-bd-3: var(--color-zinc-400);
+    --color-bd-4: var(--color-zinc-300);
+    --color-bd-5: var(--color-zinc-200);
+
+    /* Icon colors */
+    --color-icn-primary-1: var(--color-primary-300);
+    --color-icn-primary-2: var(--color-primary-200);
+    --color-icn-secondary-1: var(--color-secondary-300);
+    --color-icn-secondary-2: var(--color-secondary-200);
+    /* Icon colors in functional colors */
+    --color-icn-danger-1: var(--color-red-300);
+    --color-icn-danger-2: var(--color-red-200);
+    --color-icn-warning-1: var(--color-yellow-300);
+    --color-icn-warning-2: var(--color-yellow-200);
+    --color-icn-info-1: var(--color-blue-300);
+    --color-icn-info-2: var(--color-blue-200);
+    --color-icn-success-1: var(--color-green-300);
+    --color-icn-success-2: var(--color-green-200);
+  }
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
 @custom-variant active {
   &.active {
     @slot;

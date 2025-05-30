@@ -18,8 +18,8 @@ const sortedPosts = allPosts.sort(
 );
 
 const viewParam = Astro.url.searchParams.get("view") || "wide";
-const viewType = ["wide", "thumbnail", "text-only"].includes(viewParam)
-  ? (viewParam as "wide" | "thumbnail" | "text-only")
+const viewType = ["wide", "thumbnail", "compact"].includes(viewParam)
+  ? (viewParam as "wide" | "thumbnail" | "compact")
   : "wide";
 ---
 

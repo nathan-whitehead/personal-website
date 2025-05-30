@@ -1,0 +1,147 @@
+---
+interface Props {
+  indexPath?: string;
+}
+const { indexPath = "" } = Astro.props;
+---
+
+<blog-search data-index-path={indexPath}>
+  <div class="blog-search font-sans mb-8">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search blog posts..."
+      aria-label="Search blog posts"
+      class="w-full p-2 border rounded bg-sf-1 border-bd-1"
+    />
+    <div
+      id="searchResults"
+      class="search-results hidden mt-2 bg-sf-2 border border-bd-1 rounded shadow-md p-2"
+    >
+    </div>
+  </div>
+</blog-search>
+
+<script>
+  interface SearchItem {
+    title: string;
+    content: string;
+    category: string;
+    url: string;
+    date: string;
+  }
+
+  class BlogSearch extends HTMLElement {
+    searchInput: HTMLInputElement | null = null;
+    searchResults: HTMLElement | null = null;
+    searchIndex: SearchItem[] = [];
+
+    constructor() {
+      super();
+      this.loadSearchIndex = this.loadSearchIndex.bind(this);
+      this.handleSearchInput = this.handleSearchInput.bind(this);
+      this.handleClickOutside = this.handleClickOutside.bind(this);
+    }
+
+    connectedCallback() {
+      this.searchInput = this.querySelector("#searchInput");
+      this.searchResults = this.querySelector("#searchResults");
+
+      if (!this.searchInput || !this.searchResults) {
+        console.error("Search input or results container not found.");
+        return;
+      }
+
+      // Add event listeners
+      this.searchInput.addEventListener("input", this.handleSearchInput);
+      document.addEventListener("click", this.handleClickOutside);
+
+      // Load search index
+      this.loadSearchIndex();
+    }
+
+    disconnectedCallback() {
+      // Clean up event listeners when element is removed
+      if (this.searchInput) {
+        this.searchInput.removeEventListener("input", this.handleSearchInput);
+      }
+      document.removeEventListener("click", this.handleClickOutside);
+    }
+
+    loadSearchIndex() {
+      const indexPath = this.getAttribute("data-index-path");
+      if (!indexPath) {
+        console.error("No index path provided for search index.");
+        return;
+      }
+      fetch(indexPath)
+        .then((response) => response.json())
+        .then((data) => {
+          this.searchIndex = data;
+        })
+        .catch((error) =>
+          console.error(`Error loading search index from ${indexPath}`, error)
+        );
+    }
+
+    handleSearchInput(event: Event) {
+      if (!this.searchResults) return;
+
+      const target = event.target as HTMLInputElement;
+      const query = target.value.toLowerCase().trim();
+
+      if (!query) {
+        this.searchResults.innerHTML = "";
+        this.searchResults.classList.add("hidden");
+        return;
+      }
+
+      // Filter posts that match the query
+      const results = this.searchIndex
+        .filter((post) => {
+          return (
+            post.title.toLowerCase().includes(query) ||
+            post.content.toLowerCase().includes(query) ||
+            post.category.toLowerCase().includes(query)
+          );
+        })
+        .slice(0, 5); // Limit to 5 results
+
+      // Display results
+      if (results.length > 0) {
+        this.searchResults.innerHTML =
+          '<ul class="space-y-2">' +
+          results
+            .map(
+              (post) => `
+              <li class="pb-2 border-b border-bd-1 last:border-b-0">
+                <a href="${post.url}" class="hover:text-ln-primary-1 block font-medium">${post.title}</a>
+                <span class="post-date text-ln-muted-1 text-sm">${post.date}</span>
+              </li>
+            `
+            )
+            .join("") +
+          "</ul>";
+        this.searchResults.classList.remove("hidden");
+      } else {
+        this.searchResults.innerHTML =
+          '<p class="text-center text-ln-muted-1">No results found</p>';
+        this.searchResults.classList.remove("hidden");
+      }
+    }
+
+    handleClickOutside(event: MouseEvent) {
+      if (!this.searchInput || !this.searchResults) return;
+
+      if (
+        !this.searchInput.contains(event.target as Node) &&
+        !this.searchResults.contains(event.target as Node)
+      ) {
+        this.searchResults.classList.add("hidden");
+      }
+    }
+  }
+
+  // Define custom element
+  customElements.define("blog-search", BlogSearch);
+</script>

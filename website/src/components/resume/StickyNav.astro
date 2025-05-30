@@ -1,0 +1,118 @@
+---
+interface Props {
+  id?: string;
+  class?: string | string[] | Record<string, boolean>;
+}
+
+const { id = "resume-nav", class: className } = Astro.props;
+---
+
+<sticky-nav id={id} class={className}>
+  <slot />
+</sticky-nav>
+
+<script>
+  class StickyNav extends HTMLElement {
+    private header: HTMLElement | null = null;
+    private observer: IntersectionObserver | null = null;
+
+    connectedCallback() {
+      this.header = document.getElementById("site-header");
+      if (!this.header) return;
+
+      // Initial position setup
+      this.updatePosition();
+
+      // Setup resize listener
+      window.addEventListener("resize", this.updatePosition.bind(this));
+
+      // Handle anchor clicks
+      this.setupAnchorClicks();
+
+      // Handle URL hash on load
+      this.handleInitialHash();
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener("resize", this.updatePosition.bind(this));
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+    }
+
+    updatePosition() {
+      if (!this.header) return;
+      const headerHeight = this.header.offsetHeight;
+      this.style.top = `${headerHeight}px`;
+    }
+
+    setupAnchorClicks() {
+      const links = this.querySelectorAll('a[href^="#"]');
+      links.forEach((link) => {
+        link.addEventListener("click", this.handleAnchorClick.bind(this));
+      });
+    }
+
+    handleAnchorClick(e: Event) {
+      e.preventDefault();
+      const link = e.currentTarget as HTMLAnchorElement;
+      const targetId = link.getAttribute("href")?.substring(1);
+      if (!targetId) return;
+
+      const targetElement = document.getElementById(targetId);
+      if (!targetElement) return;
+
+      // If target is a details element, open it
+      if (targetElement.tagName.toLowerCase() === "details") {
+        (targetElement as HTMLDetailsElement).open = true;
+      }
+
+      // Scroll with offset
+      this.scrollToWithOffset(targetElement);
+
+      // Update URL without full reload
+      history.pushState(null, "", `#${targetId}`);
+    }
+
+    handleInitialHash() {
+      const hash = window.location.hash.substring(1);
+      if (!hash) return;
+
+      const targetElement = document.getElementById(hash);
+      if (!targetElement) return;
+
+      // If target is a details element, open it
+      if (targetElement.tagName.toLowerCase() === "details") {
+        (targetElement as HTMLDetailsElement).open = true;
+      }
+
+      // Small delay to ensure elements are rendered
+      setTimeout(() => {
+        this.scrollToWithOffset(targetElement);
+      }, 100);
+    }
+
+    scrollToWithOffset(element: HTMLElement) {
+      if (!this.header) return;
+
+      const headerHeight = this.header.offsetHeight;
+      const navHeight = this.offsetHeight;
+      const extraPadding = 8; // Small buffer for visual comfort
+
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition +
+        window.pageYOffset -
+        headerHeight -
+        navHeight -
+        extraPadding;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }
+
+  customElements.define("sticky-nav", StickyNav);
+</script>

@@ -1,0 +1,76 @@
+---
+// frontmatter
+import { PreferencesManager } from "@utils/preferences.js";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<theme-toggle class={className}>
+  <button
+    id="themeToggle"
+    aria-label="Toggle dark mode"
+    class="flex items-center justify-center"
+  >
+    <span id="theme-toggle-icon" class="material-symbols-outlined">
+      light_mode
+    </span>
+  </button>
+</theme-toggle>
+
+<script>
+  import { PreferencesManager } from "@utils/preferences.js";
+  class ThemeToggle extends HTMLElement {
+    static THEMES = { LIGHT: "light", DARK: "dark" };
+    static applyTheme(theme: "light" | "dark") {
+      document.documentElement.setAttribute("data-theme", theme);
+      document.documentElement.classList.toggle("dark", theme === "dark");
+      document.documentElement.classList.toggle("light", theme === "light");
+      PreferencesManager.setPreference("theme", theme);
+    }
+    static updateButtonIcon(
+      button: HTMLButtonElement,
+      icon: HTMLSpanElement,
+      theme: "light" | "dark"
+    ) {
+      if (theme === ThemeToggle.THEMES.DARK) {
+        icon.textContent = "dark_mode";
+        button.setAttribute("aria-label", "Switch to light mode");
+      } else {
+        icon.textContent = "light_mode";
+        button.setAttribute("aria-label", "Switch to dark mode");
+      }
+    }
+    // runs for every instance of the component
+    connectedCallback() {
+      const themeToggle = this.querySelector("button");
+      const themeToggleIcon = this.querySelector("span");
+      if (!themeToggle || !themeToggleIcon) {
+        console.error("Theme toggle button or icon not found.");
+        return;
+      }
+
+      // Initialize the theme based on user preferences
+      const savedTheme = PreferencesManager.getPreference("theme");
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+      ThemeToggle.applyTheme(initialTheme);
+      ThemeToggle.updateButtonIcon(themeToggle, themeToggleIcon, initialTheme);
+
+      themeToggle.addEventListener("click", () => {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") ||
+          ThemeToggle.THEMES.LIGHT;
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        ThemeToggle.applyTheme(newTheme);
+        ThemeToggle.updateButtonIcon(themeToggle, themeToggleIcon, newTheme);
+      });
+    }
+  }
+  customElements.define("theme-toggle", ThemeToggle);
+</script>

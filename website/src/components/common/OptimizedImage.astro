@@ -1,0 +1,36 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  image: any;
+  alt?: string;
+  size: "thumbnail" | "cover" | "small" | "medium" | "large";
+  className?: string;
+}
+
+const { image, alt, size, className = "" } = Astro.props;
+
+// Define size presets
+const sizeConfigs = {
+  thumbnail: { width: 400, height: 400, format: "webp" },
+  small: { width: 300, height: undefined, format: "webp" },
+  medium: { width: 600, height: undefined, format: "webp" },
+  large: { width: 1200, height: undefined, format: "webp" },
+  cover: { width: 1600, height: undefined, format: "webp" },
+};
+
+const config = sizeConfigs[size];
+---
+
+{
+  image && (
+    <Image
+      src={image}
+      alt={alt || ""}
+      width={config.width}
+      height={config.height}
+      format={config.format}
+      class={className}
+    />
+  )
+}

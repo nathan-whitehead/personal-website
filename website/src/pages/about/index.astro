@@ -7,6 +7,7 @@ import { Image } from "astro:assets";
 import profilePic from "@images/photos/nathan-whitehead-pfp.jpg";
 
 import PhotoCarousel from "@components/PhotoCarousel.jsx";
+import LinkButton from "@components/common/LinkButton.astro";
 
 // Import all early life photos
 import nathanBaby from "@images/photos/nathan-baby.jpg";
@@ -38,33 +39,24 @@ const washingtonPhotos = [
 
 <BaseLayout title="About Nathan" description="Nathan's bio">
   <div class="max-w-xl mx-auto px-4 flex flex-col">
-    <div
-      class="about-header shadow-sm text-center p-2 mb-2 bg-paper-200 dark:bg-zinc-800 rounded"
-    >
+    <div class="about-header shadow-sm text-center p-2 mb-2 bg-sf-2 rounded">
       <h1 class="font-sans text-4xl">About Me</h1>
       <Image
         src={profilePic}
         alt="Nathan Whitehead Profile"
-        class="w-[150px] h-[150px] rounded-full mx-auto mb-2 shadow-lg border border-gray-800"
+        class="w-[150px] h-[150px] rounded-full mx-auto mb-2 shadow-lg border border-ln-dark-2"
       />
       <p>I'm an engineer based in Dallas, Texas.</p>
-      <SocialLinks />
+      <SocialLinks linkClasses="hover:bg-sf-3" />
     </div>
     <div class="blog-article-content">
       <p class="text-center mb-4">
-        <a
-          href="/about/resume/"
-          class="inline-block px-4 py-2 bg-primary text-white font-medium rounded hover:bg-primary-600 transition-colors"
-        >
+        <LinkButton href="/about/resume/">
           View my full resume here.
-        </a>
+        </LinkButton>
       </p>
       <div class="about-bio">
-        <h2
-          class="text-2xl font-sans border-b-1 border-paper-500 dark:border-zinc-500"
-        >
-          Bio
-        </h2>
+        <h2 class="text-2xl font-sans border-b-1 border-bd-1">Bio</h2>
         <p>
           I'm a software engineer with a strong background in web development
           and a keen interest in machine learning. I enjoy solving complex
@@ -77,11 +69,7 @@ const washingtonPhotos = [
       </div>
 
       <div class="about-personal">
-        <h2
-          class="text-2xl font-sans border-b-1 border-paper-500 dark:border-zinc-500"
-        >
-          My story
-        </h2>
+        <h2 class="text-2xl font-sans border-b-1 border-db-1">My story</h2>
         <div class="photo-grid mb-3">
           <PhotoCarousel
             photos={earlyLifePhotos}
@@ -122,16 +110,14 @@ const washingtonPhotos = [
           University of Texas at Dallas.
         </p>
 
-        <h2
-          class="text-2xl font-sans border-b-1 border-paper-500 dark:border-zinc-500"
-        >
-          Hobbies
-        </h2>
+        <h2 class="text-2xl font-sans border-b-1 border-bd-1">Hobbies</h2>
         <p>
           I love to travel and explore new places, especially hiking in the
           mountains and visiting new cities. I also enjoy photography, capturing
           moments from my adventures and sharing them with friends and family.
-          Some of my photos can be found in the blog <a href="/blog/photos"
+          Some of my photos can be found in the blog <a
+            href="/blog/photos"
+            class="text-ln-primary-1 hover:text-ln-primary-2 hover:underline"
             >under photos.</a
           >
         </p>
@@ -139,9 +125,15 @@ const washingtonPhotos = [
           I also enjoy watching movies and playing video games. My movie diary
           can be found on <a
             href={getLink(resume.contact.links, "Letterboxd")}
-            target="_blank">letterboxd</a
+            target="_blank"
+            class="text-ln-primary-1 hover:text-ln-primary-2 hover:underline"
+            >letterboxd</a
           > and some of my thoughts on my favorite films and games can be found in
-          the <a href="/blog/media">blog.</a>
+          the <a
+            href="/blog/media"
+            class="text-ln-primary-1 hover:text-ln-primary-2 hover:underline"
+            >blog</a
+          >.
         </p>
       </div>
     </div>

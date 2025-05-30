@@ -1,0 +1,90 @@
+---
+// frontmatter
+interface Props {
+  initialState?: "expanded" | "collapsed";
+}
+const { initialState = "expanded" } = Astro.props;
+---
+
+<toggle-sections data-initial-state={initialState}>
+  <button
+    aria-label="Toggle all sections visibility"
+    class="p-1 rounded hover:bg-sf-2 border-1 inline-flex items-center"
+  >
+    <span class="material-symbols-outlined">unfold_less</span>
+  </button>
+</toggle-sections>
+
+<script>
+  class ToggleSections extends HTMLElement {
+    button: HTMLButtonElement | null = null;
+    icon: HTMLElement | null = null;
+    detailsElements: HTMLDetailsElement[] = [];
+    allOpen = true;
+    DEFAULT_STATE = "expanded";
+    connectedCallback() {
+      this.button = this.querySelector("button");
+      this.icon = this.button ? this.button.querySelector("span") : null;
+      const parentGroup = this.closest("[data-section-group-id]");
+      if (!parentGroup) return;
+
+      this.detailsElements = Array.from(
+        parentGroup.querySelectorAll("details.collapsible-section")
+      );
+
+      if (!this.button || !this.icon || this.detailsElements.length === 0)
+        return;
+
+      const initialState = this.dataset.initialState || this.DEFAULT_STATE;
+      if (initialState === "collapsed") {
+        this.closeAll();
+        this.updateIcon();
+      } else {
+        this.checkState();
+      }
+
+      this.button.addEventListener("click", () => this.toggleAll());
+
+      this.detailsElements.forEach((details) => {
+        details.addEventListener("toggle", () => this.checkState());
+      });
+    }
+
+    toggleAll() {
+      if (this.allOpen) {
+        this.closeAll();
+      } else {
+        this.openAll();
+      }
+      this.updateIcon();
+    }
+
+    openAll() {
+      this.detailsElements.forEach((details) => {
+        details.open = true;
+      });
+      this.allOpen = true;
+    }
+
+    closeAll() {
+      this.detailsElements.forEach((details) => {
+        details.open = false;
+      });
+      this.allOpen = false;
+    }
+
+    checkState() {
+      this.allOpen = this.detailsElements.every((details) => details.open);
+      this.updateIcon();
+    }
+
+    updateIcon() {
+      if (!this.icon) return;
+
+      this.icon.textContent = this.allOpen ? "unfold_less" : "unfold_more";
+      this.button?.setAttribute("aria-expanded", this.allOpen.toString());
+    }
+  }
+
+  customElements.define("toggle-sections", ToggleSections);
+</script>

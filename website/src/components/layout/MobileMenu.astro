@@ -1,0 +1,38 @@
+---
+// frontmatter
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<mobile-menu class={className}>
+  <button
+    id="mobileMenuToggle"
+    aria-label="Toggle navigation"
+    class="flex items-center justify-center"
+  >
+    <span class="material-symbols-outlined"> menu </span>
+  </button>
+</mobile-menu>
+
+<script>
+  class MobileMenu extends HTMLElement {
+    connectedCallback() {
+      const toggleButton = this.querySelector("button");
+      const menu = document.querySelector("#mobileMenu");
+
+      if (!toggleButton || !menu) {
+        console.error("Mobile menu toggle button or menu not found.");
+        return;
+      }
+
+      toggleButton.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+    }
+  }
+
+  customElements.define("mobile-menu", MobileMenu);
+</script>

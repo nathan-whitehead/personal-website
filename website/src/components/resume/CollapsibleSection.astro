@@ -11,14 +11,14 @@ const { id, title, icon, isOpen = true } = Astro.props;
 
 <details id={id} class="collapsible-section mb-6 rounded group" open={isOpen}>
   <summary
-    class="cursor-pointer px-4 py-2 border-b-1 [&::-webkit-details-marker]:hidden flex justify-between items-center text-primary-600 dark:text-primary-400 group/summary"
+    class="cursor-pointer px-4 py-2 border-b-1 [&::-webkit-details-marker]:hidden flex justify-between items-center text-ln-primary-1 group/summary"
   >
     <div class="flex items-center gap-2">
       {icon && <span class="material-symbols-outlined">{icon}</span>}
       <h2 class="text-xl font-sans">{title}</h2>
     </div>
     <span
-      class="material-symbols-outlined text-paper-500 dark:text-paper-400 transition-all duration-200 group-open:rotate-180 opacity-0 group-hover/summary:opacity-100"
+      class="material-symbols-outlined text-ln-muted-1 transition-all duration-200 group-open:rotate-180 opacity-0 group-hover/summary:opacity-100"
     >
       expand_more
     </span>
