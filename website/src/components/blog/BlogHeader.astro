@@ -23,9 +23,7 @@ function slugify(text: string): string {
 
 <BackArrow href="/blog/" label="Back to all posts" extraClasses="mb-4" />
 <h1 class="text-4xl font-sans mt-4 mb-2">{title}</h1>
-<div
-  class="post-meta flex flex-wrap gap-x-4 gap-y-2 text-paper-700 dark:text-stone-400 mb-4"
->
+<div class="post-meta flex flex-wrap gap-x-4 gap-y-2 text-ln-muted-1 mb-4">
   <span class="post-date">
     <span class="material-symbols-outlined align-middle text-sm"
       >calendar_today</span
@@ -33,7 +31,7 @@ function slugify(text: string): string {
     {formattedDate}
   </span>
   <span
-    class="post-category hover:text-primary transform hover:scale-105 transition-all duration-200"
+    class="post-category hover:text-ln-primary-1 transform hover:scale-105 transition-all duration-200"
   >
     <span class="material-symbols-outlined align-middle text-sm">folder</span>
     <a href={`/blog/category/${slugify(category)}/`} class="">

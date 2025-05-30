@@ -10,7 +10,11 @@ const { class: className = "" } = Astro.props;
 ---
 
 <theme-toggle class={className}>
-  <button id="themeToggle" aria-label="Toggle dark mode">
+  <button
+    id="themeToggle"
+    aria-label="Toggle dark mode"
+    class="flex items-center justify-center"
+  >
     <span id="theme-toggle-icon" class="material-symbols-outlined">
       light_mode
     </span>

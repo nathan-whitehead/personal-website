@@ -4,9 +4,7 @@ import { Code } from "astro:components";
 
 <div class="relative rounded-lg overflow-hidden my-6">
   <Code code="" class="language-{Astro.props.language}">
-    <div
-      class="absolute top-0 right-0 px-3 py-1 text-xs font-mono bg-paper-900/30 dark:bg-zinc-700/50 text-paper-100 rounded-bl"
-    >
+    <div class="absolute top-0 right-0 px-3 py-1 text-xs font-mono rounded-bl">
       {Astro.props.language}
     </div>
     <slot />
