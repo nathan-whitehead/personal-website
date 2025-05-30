@@ -1,14 +1,16 @@
 ---
 // frontmatter
 import { PreferencesManager } from "@utils/preferences.js";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
 ---
 
-<theme-toggle>
-  <button
-    id="themeToggle"
-    class="p-2 rounded m-0 hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
-    aria-label="Toggle dark mode"
-  >
+<theme-toggle class={className}>
+  <button id="themeToggle" aria-label="Toggle dark mode">
     <span id="theme-toggle-icon" class="material-symbols-outlined">
       light_mode
     </span>
@@ -22,6 +24,7 @@ import { PreferencesManager } from "@utils/preferences.js";
     static applyTheme(theme: "light" | "dark") {
       document.documentElement.setAttribute("data-theme", theme);
       document.documentElement.classList.toggle("dark", theme === "dark");
+      document.documentElement.classList.toggle("light", theme === "light");
       PreferencesManager.setPreference("theme", theme);
     }
     static updateButtonIcon(

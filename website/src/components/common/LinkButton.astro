@@ -1,0 +1,45 @@
+---
+interface Props {
+  href: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+  ariaLabel?: string;
+  title?: string;
+  download?: string | boolean;
+}
+const {
+  href,
+  class: className = "",
+  target = "_self",
+  rel = "noopener noreferrer",
+  ariaLabel,
+  title,
+  download,
+}: Props = Astro.props;
+
+const defaultClasses = [
+  "inline-block",
+  "px-4",
+  "py-2",
+  "bg-icn-primary-1",
+  "hover:bg-icn-primary-2",
+  "text-ln-light-1",
+  "hover:text-ln-light-2",
+  "font-medium",
+  "rounded",
+  "transition-colors",
+];
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class:list={[...defaultClasses, className]}
+  aria-label={ariaLabel}
+  title={title}
+  download={download}
+>
+  <slot />
+</a>

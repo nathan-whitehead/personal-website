@@ -12,13 +12,14 @@ import MobileMenu from "./MobileMenu.astro";
 <header
   id="site-header"
   class={`
-    py-1 bg-paper-200 dark:bg-zinc-800 
+    py-1 bg-surface-3 
     fixed w-full top-0 z-10
     transition-transform duration-300
     max-h-16
+    border-b border-border-1
   `}
 >
-  <div class="mx-auto px-2 bg-paper-200 w-full dark:bg-zinc-800">
+  <div class="mx-auto px-2 bg-surface-3 w-full">
     <nav class="flex justify-between items-center" aria-label="Main navigation">
       <a
         href="/"
@@ -30,8 +31,7 @@ import MobileMenu from "./MobileMenu.astro";
           class="h-12 w-auto mr-2"
           loading="eager"
         />
-        <span
-          class="text-3xl font-serif font-light text-stone-800 dark:text-zinc-200"
+        <span class="text-3xl font-serif font-light text-text-dimmed"
           >Nathan's Site</span
         >
       </a>
@@ -52,11 +52,12 @@ import MobileMenu from "./MobileMenu.astro";
           </li>
         </ul>
         <ThemeButton
-          id="themeToggle"
-          class="p-2 rounded m-0 hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
+          class="p-2 rounded m-0 hover:bg-surface-4 flex items-center justify-center"
           aria-label="Toggle dark mode"
         />
-        <MobileMenu />
+        <MobileMenu
+          class="md:hidden p-2 rounded hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
+        />
       </div>
     </nav>
   </div>
@@ -64,35 +65,25 @@ import MobileMenu from "./MobileMenu.astro";
   <nav
     id="mobileMenu"
     aria-label="Mobile navigation"
-    class="hidden w-full border-t bg-paper-200 border-paper-300 dark:bg-zinc-800 dark:border-zinc-700 md:hidden font-sans py-4"
+    class="hidden w-full border-t bg-surface-3 border-border-1 md:hidden font-sans py-4"
   >
     <div class="columns-2">
       <ul class="space-y-3 w-full">
         <li>
-          <a
-            href="/"
-            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
-            >HOME</a
-          >
+          <a href="/" class="block hover:text-text-muted text-center">HOME</a>
         </li>
         <li>
-          <a
-            href="/blog/"
-            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+          <a href="/blog/" class="block hover:text-text-muted text-center"
             >BLOG</a
           >
         </li>
         <li>
-          <a
-            href="/about/"
-            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+          <a href="/about/" class="block hover:text-text-muted text-center"
             >ABOUT</a
           >
         </li>
         <li>
-          <a
-            href="/projects/"
-            class="block hover:text-paper-700 text-center dark:hover:text-paper-200"
+          <a href="/projects/" class="block hover:text-text-muted text-center"
             >PROJECTS</a
           >
         </li>
@@ -101,38 +92,3 @@ import MobileMenu from "./MobileMenu.astro";
   </nav>
 </header>
 <div id="header-offset" class="h-16"></div>
-
-<!-- <script>
-    import { ThemeManager } from "@utils/theme-manager.js";
-
-    function initializeHeader() {
-      ThemeManager.initialize();
-      ThemeManager.setupEventListeners();
-
-      // Setup mobile menu (this could also be moved to its own module)
-      const mobileMenuToggle = document.getElementById("mobileMenuToggle");
-      const mobileMenu = document.getElementById("mobileMenu");
-
-      if (mobileMenuToggle && mobileMenu) {
-        // Clone to remove old listeners
-        const newMenuToggle = mobileMenuToggle.cloneNode(true);
-        if (mobileMenuToggle.parentNode) {
-          mobileMenuToggle.parentNode.replaceChild(
-            newMenuToggle,
-            mobileMenuToggle
-          );
-        }
-
-        newMenuToggle.addEventListener("click", () => {
-          const menuElement = document.getElementById("mobileMenu");
-          if (menuElement) {
-            menuElement.classList.toggle("hidden");
-          }
-        });
-      }
-    }
-
-    // Initialize theme system
-    // document.addEventListener("DOMContentLoaded", initializeHeader);
-    // document.addEventListener("astro:page-load", initializeHeader);
-  </script> -->

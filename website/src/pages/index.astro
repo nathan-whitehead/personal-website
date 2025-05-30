@@ -58,7 +58,7 @@ const navItems = [
     <!-- Hero Section -->
     <section class="text-center mb-12">
       <h1 class="text-5xl font-bold mb-4">Welcome to My Digital Space</h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+      <p class="text-xl text-ln-2 max-w-3xl mx-auto">
         Explore my projects, read my thoughts, or get in touch. This is where I
         share my work, ideas, and experiences.
       </p>
@@ -74,7 +74,7 @@ const navItems = [
             flex flex-col h-full rounded-xl p-6 border-2 
             ${item.color} ${item.borderColor}
             transition-all duration-300 hover:scale-[1.02] 
-            hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-white/5
+            hover:shadow-lg hover:shadow-ln-dark-1/15
           `}
           >
             <div class="mb-4">
@@ -85,9 +85,7 @@ const navItems = [
               </div>
             </div>
             <h2 class="text-2xl font-bold mb-2">{item.title}</h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-4 flex-grow">
-              {item.description}
-            </p>
+            <p class="text-ln-2 mb-4 flex-grow">{item.description}</p>
             <div
               class={`mt-auto inline-flex items-center font-medium ${item.iconColor}`}
             >
@@ -100,26 +98,24 @@ const navItems = [
     </section>
 
     <!-- Featured Content or Recent Updates -->
-    <section
-      class="mt-16 bg-paper-100 dark:bg-zinc-800 rounded-xl p-6 border border-gray-200 dark:border-zinc-700"
-    >
+    <section class="mt-16 bg-sf-2 rounded-xl p-6 border border-bd-1">
       <h2 class="text-3xl font-bold mb-6">Recent Updates</h2>
       <div class="space-y-4">
         <!-- You can add dynamic content here from your blog posts or projects -->
-        <div class="p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm">
-          <p class="text-sm text-gray-500 dark:text-gray-400">May 24, 2025</p>
+        <div class="p-4 bg-sf-3 rounded-lg shadow-sm">
+          <p class="text-sm text-ln-muted-1">May 24, 2025</p>
           <h3 class="text-xl font-semibold">New Website Launch</h3>
-          <p class="text-gray-600 dark:text-gray-300">
+          <p class="text-ln-2">
             Excited to share my newly redesigned personal website!
           </p>
         </div>
 
-        <div class="p-4 bg-white dark:bg-zinc-700 rounded-lg shadow-sm">
-          <p class="text-sm text-gray-500 dark:text-gray-400">May 22, 2025</p>
+        <div class="p-4 bg-sf-3 rounded-lg shadow-sm">
+          <p class="text-sm text-ln-muted-1">May 22, 2025</p>
           <h3 class="text-xl font-semibold">
             Latest Project: Data Visualization Tool
           </h3>
-          <p class="text-gray-600 dark:text-gray-300">
+          <p class="text-ln-2">
             Check out my newest project focused on interactive data
             visualization.
           </p>
@@ -129,7 +125,13 @@ const navItems = [
       <div class="mt-6 text-center">
         <a
           href="/blog/"
-          class="inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors"
+          class:list={[
+            "inline-flex items-center",
+            "px-4 py-2",
+            "bg-icn-primary-1 hover:bg-icn-primary-2",
+            "text-ln-light-1 hover:text-ln-light-2",
+            "rounded-lg transition-colors",
+          ]}
         >
           <span>View All Updates</span>
           <Icon name="mdi:chevron-right" class="w-5 h-5 ml-1" />
