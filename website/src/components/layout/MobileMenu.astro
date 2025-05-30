@@ -8,8 +8,12 @@ const { class: className = "" } = Astro.props;
 ---
 
 <mobile-menu class={className}>
-  <button id="mobileMenuToggle" aria-label="Toggle navigation">
-    <i class="bi bi-list text-xl"></i>
+  <button
+    id="mobileMenuToggle"
+    aria-label="Toggle navigation"
+    class="flex items-center justify-center"
+  >
+    <span class="material-symbols-outlined"> menu </span>
   </button>
 </mobile-menu>
 

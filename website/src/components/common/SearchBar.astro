@@ -12,11 +12,11 @@ const { indexPath = "" } = Astro.props;
       id="searchInput"
       placeholder="Search blog posts..."
       aria-label="Search blog posts"
-      class="w-full p-2 border rounded bg-stone-50 dark:bg-zinc-700 dark:border-zinc-700"
+      class="w-full p-2 border rounded bg-sf-1 border-bd-1"
     />
     <div
       id="searchResults"
-      class="search-results hidden mt-2 bg-paper-100 dark:bg-zinc-800 border border-paper-300 dark:border-zinc-700 rounded shadow-md p-2"
+      class="search-results hidden mt-2 bg-sf-2 border border-bd-1 rounded shadow-md p-2"
     >
     </div>
   </div>
@@ -114,9 +114,9 @@ const { indexPath = "" } = Astro.props;
           results
             .map(
               (post) => `
-              <li class="pb-2 border-b border-paper-200 dark:border-zinc-700 last:border-b-0">
-                <a href="${post.url}" class="hover:text-primary block font-medium">${post.title}</a>
-                <span class="post-date text-paper-700 dark:text-paper-400 text-sm">${post.date}</span>
+              <li class="pb-2 border-b border-bd-1 last:border-b-0">
+                <a href="${post.url}" class="hover:text-ln-primary-1 block font-medium">${post.title}</a>
+                <span class="post-date text-ln-muted-1 text-sm">${post.date}</span>
               </li>
             `
             )
@@ -125,7 +125,7 @@ const { indexPath = "" } = Astro.props;
         this.searchResults.classList.remove("hidden");
       } else {
         this.searchResults.innerHTML =
-          '<p class="text-center text-paper-700 dark:text-paper-400">No results found</p>';
+          '<p class="text-center text-ln-muted-1">No results found</p>';
         this.searchResults.classList.remove("hidden");
       }
     }

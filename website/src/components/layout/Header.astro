@@ -1,6 +1,6 @@
 ---
 // frontmatter
-const navLinkClasses = "nav-link hover:text-primary";
+const navLinkClasses = "nav-link hover:text-ln-primary-1";
 import { Image } from "astro:assets";
 import { getLink } from "@utils/links.js";
 import hedgehogImage from "@images/icons/hedgehog/hedgehog.png";
@@ -12,14 +12,14 @@ import MobileMenu from "./MobileMenu.astro";
 <header
   id="site-header"
   class={`
-    py-1 bg-surface-3 
+    py-1 bg-sf-3 
     fixed w-full top-0 z-10
     transition-transform duration-300
     max-h-16
-    border-b border-border-1
+    border-b border-bd-1
   `}
 >
-  <div class="mx-auto px-2 bg-surface-3 w-full">
+  <div class="mx-auto px-2 bg-sf-3 w-full">
     <nav class="flex justify-between items-center" aria-label="Main navigation">
       <a
         href="/"
@@ -31,7 +31,7 @@ import MobileMenu from "./MobileMenu.astro";
           class="h-12 w-auto mr-2"
           loading="eager"
         />
-        <span class="text-3xl font-serif font-light text-text-dimmed"
+        <span class="text-3xl font-serif font-light text-ln-2"
           >Nathan's Site</span
         >
       </a>
@@ -52,11 +52,11 @@ import MobileMenu from "./MobileMenu.astro";
           </li>
         </ul>
         <ThemeButton
-          class="p-2 rounded m-0 hover:bg-surface-4 flex items-center justify-center"
+          class="p-2 rounded m-0 hover:bg-sf-4 flex items-center justify-center"
           aria-label="Toggle dark mode"
         />
         <MobileMenu
-          class="md:hidden p-2 rounded hover:bg-paper-300 dark:hover:bg-zinc-700 flex items-center justify-center"
+          class="md:hidden p-2 rounded hover:bg-sf-4 flex items-center justify-center"
         />
       </div>
     </nav>
@@ -65,25 +65,25 @@ import MobileMenu from "./MobileMenu.astro";
   <nav
     id="mobileMenu"
     aria-label="Mobile navigation"
-    class="hidden w-full border-t bg-surface-3 border-border-1 md:hidden font-sans py-4"
+    class="hidden w-full border-t bg-sf-3 border-bd-1 md:hidden font-sans py-4"
   >
     <div class="columns-2">
       <ul class="space-y-3 w-full">
         <li>
-          <a href="/" class="block hover:text-text-muted text-center">HOME</a>
+          <a href="/" class="block hover:text-ln-muted-1 text-center">HOME</a>
         </li>
         <li>
-          <a href="/blog/" class="block hover:text-text-muted text-center"
+          <a href="/blog/" class="block hover:text-ln-muted-1 text-center"
             >BLOG</a
           >
         </li>
         <li>
-          <a href="/about/" class="block hover:text-text-muted text-center"
+          <a href="/about/" class="block hover:text-ln-muted-1 text-center"
             >ABOUT</a
           >
         </li>
         <li>
-          <a href="/projects/" class="block hover:text-text-muted text-center"
+          <a href="/projects/" class="block hover:text-ln-muted-1 text-center"
             >PROJECTS</a
           >
         </li>

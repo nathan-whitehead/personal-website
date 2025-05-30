@@ -47,30 +47,6 @@ export default function PhotoCarousel({
           </SplideSlide>
         ))}
       </Splide>
-      <style jsx>{`
-        .photo-carousel :global(.splide__pagination__page) {
-          /* Size and shape */
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-
-          /* Colors */
-          background: --color-black; /* Default state */
-          opacity: 0.7;
-        }
-
-        .photo-carousel :global(.splide__pagination__page.is-active) {
-          /* Active dot */
-          background: #3b82f6; /* Primary color */
-          opacity: 1;
-          transform: scale(1.2);
-        }
-
-        .photo-carousel :global(.splide__pagination) {
-          /* Container for dots */
-          padding: 1rem 0;
-        }
-      `}</style>
     </div>
   );
 }
