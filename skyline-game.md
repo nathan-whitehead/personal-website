@@ -38,15 +38,15 @@ Eventually, more modes or variants could be added such as:
 	
 ## Gameplan
 
-0. Reorganize my docker setup to simplify deployment and follow best practice.
-1. Write the image scraper and get a few images for each of top 50 US MSAs
-2. Set up an organization structure for how to store those images and the metadata files
-3. Create a minimal frontend
-4. Create a MWE with a dummy API response
-5. Create an API that can send such a response.
-6. Design and implement a database schema to store and fetch this information
-7. Update frontend and finalize the layout and look.
-8. Replan
+0. [x] Reorganize my docker setup to simplify deployment and follow best practice.
+1. [x] Write the image scraper and get a few images for each of top 50 US MSAs
+2. [ ] Set up an organization structure for how to store those images and the metadata files
+3. [ ] Create a minimal frontend
+4. [ ] Create a MWE with a dummy API response
+5. [ ] Create an API that can send such a response.
+6. [ ] Design and implement a database schema to store and fetch this information
+7. [ ] Update frontend and finalize the layout and look.
+8. [ ] Replan
 
 
 
