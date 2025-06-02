@@ -11,32 +11,66 @@
  * or if the end page uses color, use a colored version of the icon.
  */
 
+import type { ComponentProps } from "astro/types";
+
 // Import your SVG components
-import Letterboxd from "./icons/Letterboxd.astro";
-import Hedgehog from "./icons/Hedgehog.astro";
-import LinkedIn from "./icons/LinkedIn.astro";
-import GitHub from "./icons/GitHub.astro";
-import Twitter from "./icons/Twitter.astro";
-import Instagram from "./icons/Instagram.astro";
-import Email from "./icons/Email.astro";
+import Letterboxd from "@components/icons/Letterboxd.astro";
+import Hedgehog from "@components/icons/Hedgehog.astro";
+import LinkedIn from "@components/icons/LinkedIn.astro";
+import GitHub from "@components/icons/Github.astro";
+import Twitter from "@components/icons/Twitter.astro";
+import Instagram from "@components/icons/Instagram.astro";
+import Email from "@components/icons/Email.astro";
+import Skyline from "@components/icons/Skyline.astro";
+import USAFlag from "@components/icons/flags/USAFlag.astro";
+import OklahomaFlag from "@components/icons/flags/OklahomaFlag.astro";
+import TexasFlag from "@components/icons/flags/TexasFlag.astro";
 
 // Define props
-type IconName =
-  | "letterboxd"
-  | "hedgehog"
-  | "linkedin"
-  | "github"
-  | "twitter"
-  | "instagram"
-  | "email";
+type IconVariants = {
+  "ok-flag": "default" | "no-text" | "text" | "current";
+  "oklahoma-flag": "default" | "no-text" | "text" | "current"; // alias
+  "tx-flag": "default";
+  "texas-flag": "default"; // alias
+  "us-flag": "default" | "olympic" | "small" | "13-star" | "50-star";
+  "usa-flag": "default" | "olympic" | "small" | "13-star" | "50-star"; // alias
+  email: "default";
+  github: "default" | "mono" | "monochrome" | "color" | "text";
+  hedgehog: "default" | "fill" | "line" | "color";
+  instagram: "default" | "mono" | "monochrome" | "color" | "script" | "text";
+  letterboxd:
+    | "default"
+    | "light"
+    | "light icon"
+    | "light icon mono"
+    | "light vertical"
+    | "light horizontal"
+    | "dark"
+    | "dark icon"
+    | "dark icon mono"
+    | "dark vertical"
+    | "dark horizontal";
+  linkedin: "default" | "mono" | "monochrome" | "color";
+  skyline: "default" | "text-title";
+  twitter: "default" | "mono" | "monochrome" | "color" | "x" | "new";
+};
+
+type IconName = keyof IconVariants;
+
 interface Props {
   name: IconName;
   size?: string;
   class?: string;
+  variant?: string;
 }
 
 // Destructure props with defaults
-const { name, size = "1em", class: className = "" } = Astro.props;
+const {
+  name,
+  size = "1em",
+  class: className = "",
+  variant: variant = "default",
+} = Astro.props;
 
 // Map of available icons
 const icons = {
@@ -47,15 +81,50 @@ const icons = {
   twitter: Twitter,
   instagram: Instagram,
   email: Email,
-  // Add other icons as needed
+  skyline: Skyline,
+
+  "us-flag": USAFlag,
+  "usa-flag": USAFlag, // Alias
+  "ok-flag": OklahomaFlag,
+  "oklahoma-flag": OklahomaFlag, // Alias
+  "tx-flag": TexasFlag,
+  "texas-flag": TexasFlag, // Alias
 };
 
 const IconComponent = icons[name] || null;
+
+// Type guard function to check if a variant is valid for an icon
+function isValidVariant(
+  iconName: IconName,
+  variant: string
+): variant is IconVariants[typeof iconName] {
+  const validVariants: Record<IconName, string[]> = {
+    letterboxd: ["default", "color"],
+    hedgehog: ["default", "color", "small"],
+    linkedin: ["default"],
+    github: ["default"],
+    twitter: ["default"],
+    instagram: ["default"],
+    email: ["default"],
+    skyline: ["default", "night", "day"],
+    "us-flag": ["default"],
+    "usa-flag": ["default"],
+    "ok-flag": ["default"],
+    "oklahoma-flag": ["default"],
+    "tx-flag": ["default"],
+    "texas-flag": ["default"],
+  };
+
+  return validVariants[iconName].includes(variant);
+}
+
+// Use the default variant if the provided one isn't valid
+const safeVariant = isValidVariant(name, variant) ? variant : "default";
 ---
 
 {
   IconComponent ? (
-    <IconComponent size={size} class={className} />
+    <IconComponent size={size} class={className} variant={safeVariant as any} />
   ) : (
     <span class="icon-error">Icon "{name}" not found</span>
   )

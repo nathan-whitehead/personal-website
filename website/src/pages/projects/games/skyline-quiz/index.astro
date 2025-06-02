@@ -1,0 +1,35 @@
+---
+import Icon from "@/components/common/Icon.astro";
+import BaseLayout from "@layouts/base.astro";
+import { Image } from "astro:assets";
+---
+
+<BaseLayout
+  title="Skyline Quiz | {date}"
+  description="Test your skyline guessing ability with daily skyline quizzes"
+>
+  <div class="max-w-3xl mx-auto px-4 flex flex-col">
+    <div class="text-center mb-4">
+      <h1 class="text-4xl font-bold">Skyline Quiz</h1>
+      <p class="text-lg">
+        Test your skyline guessing ability with daily skyline quizzes
+      </p>
+    </div>
+    <div class="flex justify-center mb-6">
+      <Icon
+        name="skyline"
+        class="rounded shadow-lg text-icn-primary-1"
+        size="5rem"
+      />
+    </div>
+    <p class="mb-4">
+      Skyline Quiz is a fun and engaging game where you can test your knowledge
+      of city skylines from around the world. Each day, a new skyline image is
+      presented, and you have to guess which city it belongs to.
+    </p>
+    <p class="mb-4">
+      The game is designed to be both educational and entertaining, making it
+      perfect for geography enthusiasts and casual players alike.
+    </p>
+  </div>
+</BaseLayout>
