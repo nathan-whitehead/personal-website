@@ -1,0 +1,39 @@
+---
+type Variant = "default";
+
+interface Props {
+  class?: string;
+  size?: string;
+  variant?: Variant;
+}
+
+const {
+  class: className = "",
+  size = "1em",
+  variant = "default",
+} = Astro.props;
+---
+
+{
+  variant === "default" && (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 9 6"
+      class={className}
+      style={{ width: "auto", height: size }}
+      aria-label="Texas Flag"
+      role="img"
+    >
+      <>
+        <path d="m0 3h9v3H0" fill="#bf0d3e" />
+        <path d="m0 0h9v3H0" fill="#fff" />
+        <path d="m0 0h3v6H0" fill="#00205b" />
+        <path
+          transform="scale(.01)"
+          d="m43 276h214l-173 126 66-204 66 204"
+          fill="#fff"
+        />
+      </>
+    </svg>
+  )
+}
