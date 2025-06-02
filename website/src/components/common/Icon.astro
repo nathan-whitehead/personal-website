@@ -11,8 +11,6 @@
  * or if the end page uses color, use a colored version of the icon.
  */
 
-import type { ComponentProps } from "astro/types";
-
 // Import your SVG components
 import Letterboxd from "@components/icons/Letterboxd.astro";
 import Hedgehog from "@components/icons/Hedgehog.astro";
@@ -93,38 +91,38 @@ const icons = {
 
 const IconComponent = icons[name] || null;
 
-// Type guard function to check if a variant is valid for an icon
-function isValidVariant(
-  iconName: IconName,
-  variant: string
-): variant is IconVariants[typeof iconName] {
-  const validVariants: Record<IconName, string[]> = {
-    letterboxd: ["default", "color"],
-    hedgehog: ["default", "color", "small"],
-    linkedin: ["default"],
-    github: ["default"],
-    twitter: ["default"],
-    instagram: ["default"],
-    email: ["default"],
-    skyline: ["default", "night", "day"],
-    "us-flag": ["default"],
-    "usa-flag": ["default"],
-    "ok-flag": ["default"],
-    "oklahoma-flag": ["default"],
-    "tx-flag": ["default"],
-    "texas-flag": ["default"],
-  };
+// // Type guard function to check if a variant is valid for an icon
+// function isValidVariant(
+//   iconName: IconName,
+//   variant: string
+// ): variant is IconVariants[typeof iconName] {
+//   const validVariants: Record<IconName, string[]> = {
+//     letterboxd: ["default", "color"],
+//     hedgehog: ["default", "color", "small"],
+//     linkedin: ["default"],
+//     github: ["default"],
+//     twitter: ["default"],
+//     instagram: ["default"],
+//     email: ["default"],
+//     skyline: ["default", "night", "day"],
+//     "us-flag": ["default"],
+//     "usa-flag": ["default"],
+//     "ok-flag": ["default"],
+//     "oklahoma-flag": ["default"],
+//     "tx-flag": ["default"],
+//     "texas-flag": ["default"],
+//   };
 
-  return validVariants[iconName].includes(variant);
-}
+//   return validVariants[iconName].includes(variant);
+// }
 
-// Use the default variant if the provided one isn't valid
-const safeVariant = isValidVariant(name, variant) ? variant : "default";
+// // Use the default variant if the provided one isn't valid
+// const safeVariant = isValidVariant(name, variant) ? variant : "default";
 ---
 
 {
   IconComponent ? (
-    <IconComponent size={size} class={className} variant={safeVariant as any} />
+    <IconComponent size={size} class={className} variant={variant as any} />
   ) : (
     <span class="icon-error">Icon "{name}" not found</span>
   )

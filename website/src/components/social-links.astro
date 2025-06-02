@@ -1,19 +1,18 @@
 ---
 import resume from "@data/resume.json";
 import { getLink } from "@utils/links.js";
+import Icon from "@components/common/Icon.astro";
 
 // If you're passing any props to the component
 interface Props {
   color?: boolean;
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | string; // Size options with custom size support
+  size?: string;
   extraClasses?: string;
   linkClasses?: string; // Additional classes for the links
   iconClasses?: string; // Additional classes for the icons
   labelClasses?: string; // Additional classes for the labels
   labels?: boolean; // If true, only icons will be displayed
 }
-
-type SizeKey = keyof typeof sizeMap;
 
 const {
   extraClasses = "",
@@ -25,83 +24,75 @@ const {
   labels = false,
 } = Astro.props;
 
-const sizeMap = {
-  xs: "text-lg h-8 w-8",
-  sm: "text-xl h-10 w-10",
-  md: "text-2xl h-12 w-12",
-  lg: "text-3xl h-16 w-16",
-  xl: "text-4xl h-20 w-20",
-};
-const sizeClasses = size in sizeMap ? sizeMap[size as SizeKey] : size;
-
-// Generate color classes if color is enabled
-const colorClasses = color
-  ? {
-      linkedin:
-        "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300",
-      github:
-        "text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white",
-      twitter:
-        "text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300",
-      instagram:
-        "text-pink-600 hover:text-pink-700 dark:text-pink-400 dark:hover:text-pink-300",
-      email:
-        "text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300",
-      website:
-        "text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300",
-      letterboxd:
-        "text-orange-500 hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300",
-    }
-  : {};
+// // Generate color classes if color is enabled
+// const colorClasses = color
+//   ? {
+//       linkedin:
+//         "text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300",
+//       github:
+//         "text-gray-800 hover:text-black dark:text-gray-300 dark:hover:text-white",
+//       twitter:
+//         "text-sky-500 hover:text-sky-600 dark:text-sky-400 dark:hover:text-sky-300",
+//       instagram:
+//         "text-pink-600 hover:text-pink-700 dark:text-pink-400 dark:hover:text-pink-300",
+//       email:
+//         "text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300",
+//       website:
+//         "text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300",
+//       letterboxd:
+//         "text-orange-500 hover:text-orange-600 dark:text-orange-400 dark:hover:text-orange-300",
+//     }
+//   : {};
 
 // social links configuration
 const socialLinks = [
   {
     name: "LinkedIn",
-    icon: "bi-linkedin",
+    iconName: "linkedin",
     link: getLink(resume.contact.links, "LinkedIn"),
-    colorClass: color ? colorClasses.linkedin : "",
+    variant: color ? "color" : "mono",
   },
   {
     name: "GitHub",
-    icon: "bi-github",
+    iconName: "github",
     link: getLink(resume.contact.links, "GitHub"),
-    colorClass: color ? colorClasses.github : "",
+    variant: "default",
   },
   {
     name: "Twitter",
-    icon: "bi-twitter",
+    iconName: "twitter",
     link: getLink(resume.contact.links, "Twitter"),
-    colorClass: color ? colorClasses.twitter : "",
+    variant: color ? "color" : "mono",
   },
   {
     name: "Instagram",
-    icon: "bi-instagram",
+    iconName: "instagram",
     link: getLink(resume.contact.links, "Instagram"),
-    colorClass: color ? colorClasses.instagram : "",
+    variant: color ? "color" : "mono",
   },
   {
     name: "Email",
-    icon: "bi-envelope-fill",
+    iconName: "email",
     link: `mailto:${resume.contact.email}`,
-    colorClass: color ? colorClasses.email : "",
+    variant: "default",
+    classes: color ? "text-ln-primary-1" : "",
   },
   {
     name: "Website",
-    icon: "ci ci-hedgehog",
+    iconName: "hedgehog",
     link: getLink(resume.contact.links, "Website"),
-    colorClass: color ? colorClasses.website : "",
+    variant: color ? "color" : "default",
   },
   {
     name: "Letterboxd",
-    icon: "ci ci-letterboxd",
+    iconName: "letterboxd",
     link: getLink(resume.contact.links, "Letterboxd"),
-    colorClass: color ? colorClasses.letterboxd : "",
+    variant: color ? "default" : "mono",
   },
 ];
 ---
 
-<div
+<!-- <div
   class={`social-links flex justify-center flex-wrap gap-1 font-sans ${extraClasses}`}
 >
   {
@@ -133,6 +124,43 @@ const socialLinks = [
             sizeClasses,
             iconClasses,
           ]}
+        />
+        {labels && (
+          <span class={`text-sm text-center ${labelClasses}`}>{link.name}</span>
+        )}
+      </a>
+    ))
+  }
+</div> -->
+<div
+  class={`social-links flex justify-center flex-wrap gap-2 font-sans ${extraClasses}`}
+>
+  {
+    socialLinks.map((link) => (
+      <a
+        href={link.link}
+        title={link.name}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={link.name}
+        class:list={[
+          "social-link",
+          labels
+            ? "flex flex-col items-center"
+            : "inline-flex items-center justify-center",
+          "rounded-md",
+          // "hover:bg-sf-3",
+          "transition-colors",
+          "px-1",
+          link.classes || "",
+          linkClasses,
+        ]}
+      >
+        <Icon
+          name={link.iconName as any}
+          size={size}
+          variant={link.variant}
+          class:list={[iconClasses]}
         />
         {labels && (
           <span class={`text-sm text-center ${labelClasses}`}>{link.name}</span>
